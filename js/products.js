@@ -1,3 +1,5 @@
+import { qtyFormater } from "./utils.js";
+
 const productCard = (card) => {
   const { name, imgUrl, id, price, orderInfo } = card;
 
@@ -52,7 +54,9 @@ const productCard = (card) => {
         </p>
       </div>
       <div class="product-card__orders">
-        <span class="bold product-card__footer-line">${price * 4}</span>
+        <span class="bold product-card__footer-line">${qtyFormater(
+          price * 4
+        )}</span>
         <span class="product-card__footer-line">orders</span>
       </div>
       <label class="product-card__like" for="product-like-${id}">
