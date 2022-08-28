@@ -8,6 +8,129 @@
       rel="icon"
       href="https://camo.githubusercontent.com/eb8b5f9caa4b4765b222e961729eadb775ac710b/68747470733a2f2f67617265766e612e6769746875622e696f2f6a732d73616d706c65732f696d616765732f612d6c6576656c2d69636f2e706e67"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/normalize.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
   </head>
-  <body></body>
+  <body>
+    <header>
+      <div class="container header__block">
+        <div class="logo logo__block">
+          <a href="./index.html" class="logo__link">
+            <img src="./img/logo.svg" alt="Logo" class="logo__img" />
+          </a>
+        </div>
+        <div class="basket basket__block">
+          <button class="icon-button">
+            <span class="icon-button__content">
+              <span class="icon-button__icon"></span>
+              <!-- <div class="badge">
+                <span class="badge__content">3</span>
+              </div> -->
+            </span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section>
+        <div class="container slider__block">
+          <div class="slider">
+            <div class="slide">
+              <div class="slide__content">
+                <h1>IPad Air</h1>
+                <button class="button">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="product-list" aria-label="product list">
+        <div class="container">
+          <div class="search search__block">
+            <div class="search__icon-container">
+              <div class="search__icon"></div>
+            </div>
+            <input
+              type="text"
+              name="search"
+              id="search"
+              class="search__input"
+              placeholder="Enter device name..."
+            />
+            <button class="icon-button filter">
+              <span class="icon-button__content">
+                <span class="icon-button__icon"></span>
+              </span>
+            </button>
+            <button class="icon-button sort">
+              <span class="icon-button__content">
+                <span class="icon-button__icon"></span>
+              </span>
+            </button>
+          </div>
+          <!-- <div class="filters"></div> -->
+          <div class="products">
+            <article class="product-card product-card__block">
+              <div class="product-card__content">
+                <a href="#" class="product-card__link">
+                  <div class="product-card__image">
+                    <img src="./img/items/airpods-max.jpg" alt="product" />
+                  </div>
+                  <div class="product-card__text">
+                    <h2>iPad PRO 13"</h2>
+                    <p>
+                      <span class="icon icon--positive"></span>
+                      <span class="bold">85</span>
+                      left in stock
+                    </p>
+                    <p>
+                      Price:
+                      <span class="bold">900</span>
+                      $
+                    </p>
+                  </div>
+                </a>
+                <div class="product-card__action">
+                  <button class="button">Add to cart</button>
+                </div>
+              </div>
+              <div class="product-card__footer">
+                <div class="product-card__reviews">
+                  <span class="icon icon--full-heart"></span>
+                  <p>
+                    <span class="product-card__footer-line">
+                      <span class="bold">87%</span>
+                      Positive reviews
+                    </span>
+                    <span class="product-card__footer-line">Above avarage</span>
+                  </p>
+                </div>
+                <div class="product-card__orders">
+                  <span class="bold product-card__footer-line">1,327</span>
+                  <span class="product-card__footer-line">orders</span>
+                </div>
+                <label class="product-card__like" for="like">
+                  <input
+                    type="checkbox"
+                    name="like"
+                    id="like"
+                    class="product-card__like-checkbox"
+                  />
+                  <span class="icon icon--empty-heart"></span>
+                </label>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./js/items.js"></script>
+    <script type="module" src="./js/main.js"></script>
+  </body>
 </html>
