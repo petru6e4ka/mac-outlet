@@ -1,21 +1,3 @@
-/*
-  --dark-blue: #102243; //btn settings
-  --evening-blue: #0e49b5; //accents, btns
-  --soft-blue: #edf3ff; //bg
-  --sky-blue: #4191ff;
-  --deep-grey: #767272; // icons, placeholder text, search icon
-  --grey: #c4c4c4; //checkbox
-  --soft-grey: #e2e2e2; //borders
-  --neutral: #dddddd; // - accordion border, search border
-  --cold-morning-grey: #3b3e66; //bg
-  --white: #ffffff;
-  --black: #000;
-  --dark: #102243; //text
-  --coral: #f05454;
-  --green: #1bc943;
-  --soft-pink: rgba(248, 50, 69, 0.15);
-*/
-
 body {
   margin: 0;
   padding: 0;
@@ -332,6 +314,7 @@ ul {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  height: 100%;
   margin-bottom: 15px;
   padding: 14px 50px 0;
 }
@@ -341,6 +324,7 @@ ul {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  height: 100%;
   color: #767272;
 }
 
