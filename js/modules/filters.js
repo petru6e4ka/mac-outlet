@@ -1,4 +1,5 @@
 import { filtersForm } from "../htmlTemplates/filters.js";
+import EventEmitter from "../helpers/EventEmitter.js";
 
 export class Filters {
   constructor(list) {
@@ -18,6 +19,7 @@ export class Filters {
     this.customFilters = {};
     this.parent = document.querySelector("#list");
     this.block = document.forms.filters;
+    this.events = new EventEmitter();
     this.fillFilters(list, this.filters);
     this.renderFilters(this.filters);
     this.setChanges();
@@ -85,12 +87,12 @@ export class Filters {
         }
       });
 
-      console.log(this.customFilters);
+      this.events.emit("applyFilter", this.customFilters);
     });
 
     form.addEventListener("reset", () => {
       this.customFilters = {};
-      console.log(this.customFilters);
+      this.events.emit("clearFilter");
     });
   }
 

@@ -14,16 +14,25 @@ class App {
 
     this.controls.events.subscribe(
       "closeFilter",
-      this.filters.closeFilter.bind(this)
+      this.filters.closeFilter.bind(this.filters)
     );
     this.controls.events.subscribe(
       "openFilter",
-      this.filters.openFilter.bind(this)
+      this.filters.openFilter.bind(this.filters)
     );
 
     this.products.events.subscribe(
       "openProductInfo",
-      this.modal.openModal.bind(this, productInfo)
+      this.modal.openModal.bind(this.modal, productInfo)
+    );
+
+    this.filters.events.subscribe(
+      "applyFilter",
+      this.products.applyFilter.bind(this.products)
+    );
+    this.filters.events.subscribe(
+      "clearFilter",
+      this.products.showAll.bind(this.products)
     );
   }
 }

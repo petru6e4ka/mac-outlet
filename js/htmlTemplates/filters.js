@@ -1,6 +1,6 @@
 import { memoryFormater } from "../helpers/utils.js";
 
-export const filtersItemTemplate = (name, value) => `
+export const filtersItemTemplate = (name, value, label) => `
   <label for="${value}" class="filters__checkbox-label">
     <input
       type="checkbox"
@@ -10,7 +10,7 @@ export const filtersItemTemplate = (name, value) => `
       class="filters__content-checkbox"
     />
     <span class="icon icon--checkbox"></span>
-    <span>${value}</span>
+    <span>${label}</span>
   </label>
 `;
 
@@ -19,20 +19,20 @@ export const filtersForm = (filters) => {
 
   const colors = Object.keys(color)
     .sort()
-    .map((c) => filtersItemTemplate("color", c))
+    .map((c) => filtersItemTemplate("color", c, c))
     .join("");
 
   const memories = Object.keys(memory)
-    .map((m) => filtersItemTemplate("memory", memoryFormater(m)))
+    .map((m) => filtersItemTemplate("memory", m, memoryFormater(m)))
     .join("");
 
   const oses = Object.keys(os)
     .sort()
-    .map((o) => filtersItemTemplate("os", o))
+    .map((o) => filtersItemTemplate("os", o, o))
     .join("");
 
   const displays = display
-    .map((d) => filtersItemTemplate("display", d))
+    .map((d) => filtersItemTemplate("display", d, d))
     .join("");
 
   return `<form

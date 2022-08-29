@@ -4,15 +4,27 @@ import EventEmitter from "../helpers/EventEmitter.js";
 export class Products {
   constructor(list) {
     this.products = list;
+    this.filtered = list;
     this.parent = document.querySelector("#products");
     this.events = new EventEmitter();
-    this.renderProducts(this.products);
+    this.clearProducts(this.parent);
+    this.renderProducts(this.filtered);
     this.productClick();
   }
 
   renderProducts(products) {
+    if (!products) return;
+
     const html = products.map((product) => productCard(product)).join("");
     return (this.parent.innerHTML = html);
+  }
+
+  clearProducts(parent) {
+    if (parent) {
+      while (parent.lastChild) {
+        parent.removeChild(parent.lastChild);
+      }
+    }
   }
 
   productClick() {
@@ -31,5 +43,53 @@ export class Products {
     );
 
     this.events.emit("openProductInfo", product);
+  }
+
+  applyFilter(filters) {
+    const {
+      color: filterColor,
+      memory,
+      os: filterOs,
+      display: filterDisplay,
+    } = filters;
+
+    this.filtered = this.products.slice(0);
+
+    if (filterColor) {
+      this.filterByColor(filterColor);
+    }
+
+    if (filterOs) {
+      this.filterByOs(filterOs);
+    }
+
+    if (memory) {
+      this.filterByMemory(memory);
+    }
+
+    this.clearProducts(this.parent);
+    this.renderProducts(this.filtered);
+    this.productClick();
+  }
+
+  filterByColor(filterColor) {
+    this.filtered = this.filtered.filter((elem) =>
+      elem.color.some((colors) => colors in filterColor)
+    );
+  }
+
+  filterByOs(filterOs) {
+    this.filtered = this.filtered.filter((elem) => elem.os in filterOs);
+  }
+
+  filterByMemory(memory) {
+    this.filtered = this.filtered.filter((elem) => elem.storage in memory);
+  }
+
+  showAll() {
+    this.filtered = this.products.slice(0);
+    this.clearProducts(this.parent);
+    this.renderProducts(this.filtered);
+    this.productClick();
   }
 }
