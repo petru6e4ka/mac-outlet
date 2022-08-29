@@ -59,6 +59,7 @@ export class Filters {
 
       if (filters.price.min > price) {
         filters.price.min = price;
+        this.min = price;
       }
 
       if (!filters.price.max) {
@@ -67,6 +68,7 @@ export class Filters {
 
       if (filters.price.max < price) {
         filters.price.max = price;
+        this.max = price;
       }
 
       if (os && !(os in filters.os)) {
@@ -103,9 +105,22 @@ export class Filters {
         }
       });
 
+      const minInput = form.querySelector('[name="min"]');
+      const maxInput = form.querySelector('[name="max"]');
+      const minValue = Number(minInput.value);
+      const maxValue = Number(maxInput.value);
+
+      if (minValue < this.min || minValue > this.max) {
+        minInput.value = this.min;
+      }
+
+      if (maxValue > this.max || maxValue < this.min) {
+        maxInput.value = this.max;
+      }
+
       const price = {
-        min: form.querySelector('[name="min"]').value || 0,
-        max: form.querySelector('[name="max"]').value || Infinity,
+        min: minInput.value,
+        max: maxInput.value,
       };
 
       this.events.emit("applyFilter", { ...this.customFilters, price });
