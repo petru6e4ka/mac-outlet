@@ -103,7 +103,12 @@ export class Filters {
         }
       });
 
-      this.events.emit("applyFilter", this.customFilters);
+      const price = {
+        min: form.querySelector('[name="min"]').value || 0,
+        max: form.querySelector('[name="max"]').value || Infinity,
+      };
+
+      this.events.emit("applyFilter", { ...this.customFilters, price });
     });
 
     form.addEventListener("reset", () => {

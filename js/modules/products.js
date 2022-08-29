@@ -51,6 +51,7 @@ export class Products {
       memory,
       os: filterOs,
       display: filterDisplay,
+      price: filterPrice,
     } = filters;
 
     this.filtered = this.products.slice(0);
@@ -69,6 +70,10 @@ export class Products {
 
     if (filterDisplay) {
       this.filterByDisplay(filterDisplay);
+    }
+
+    if (filterPrice) {
+      this.filterByPrice(filterPrice);
     }
 
     this.clearProducts(this.parent);
@@ -103,6 +108,12 @@ export class Products {
       filters.some(
         (filter) => filter.min <= elem.display && filter.max >= elem.display
       )
+    );
+  }
+
+  filterByPrice(filterPrice) {
+    this.filtered = this.filtered.filter(
+      (elem) => elem.price >= filterPrice.min && elem.price <= filterPrice.max
     );
   }
 

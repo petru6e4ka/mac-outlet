@@ -71,7 +71,7 @@ export const filtersForm = (filters) => {
             max="${price.max}"
             placeholder="${price.min}"
             class="filters__input"
-            value=""
+            value="${price.min}"
           />
         </label>
         <label for="price-max" class="filters__label">
@@ -84,7 +84,7 @@ export const filtersForm = (filters) => {
             max="${price.max}"
             placeholder="${price.max}"
             class="filters__input"
-            value=""
+            value="${price.max}"
           />
         </label>
       </div>
