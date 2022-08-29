@@ -3,11 +3,10 @@ import EventEmitter from "../helpers/EventEmitter.js";
 
 export class Controls {
   constructor() {
-    console.log("controls");
     this.parent = document.querySelector("#controls");
     this.events = new EventEmitter();
     this.clearControls(this.parent);
-    this.renderControls(this.parent);
+    this.renderControls();
     this.filterBtnClick();
   }
 
@@ -19,8 +18,8 @@ export class Controls {
     }
   }
 
-  renderControls(parent) {
-    return (parent.innerHTML = controls());
+  renderControls() {
+    return (this.parent.innerHTML = controls());
   }
 
   filterBtnClick() {

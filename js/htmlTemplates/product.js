@@ -12,17 +12,13 @@ export const productCard = (card) => {
       left in stock`;
 
   const addBtn = orderInfo.inStock
-    ? `<button class="button" name="add" value="${JSON.stringify(
-        card
-      )}" id="product-add-btn-${id}">Add to cart</button>`
-    : `<button class="button" name="add" value="${JSON.stringify(
-        card
-      )}" id="product-add-btn-${id}" disabled>Add to cart</button>`;
+    ? `<button class="button" name="add" data-add-btn="${id}">Add to cart</button>`
+    : `<button class="button" name="add" data-add-btn="${id}" disabled>Add to cart</button>`;
 
   return `
-  <article class="product-card product-card__block" id="product-${id}">
+  <article class="product-card product-card__block">
     <div class="product-card__content">
-      <a href="#" class="product-card__link" id="product-link-${id}">
+      <a href="#" class="product-card__link" data-product-link="${id}">
         <div class="product-card__image">
           <img src="./img/${imgUrl}" alt="${name}" />
         </div>
