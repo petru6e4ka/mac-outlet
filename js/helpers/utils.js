@@ -12,3 +12,11 @@ export const qtyFormater = (num) => {
 
   return formated.split("").reverse().join("");
 };
+
+export const memoryFormater = (num) => {
+  if (num < 1000) return `${num} Gb`;
+  if (num < 2000) return `1 Tb`;
+  if (num < 4000) return `2 Tb`;
+
+  return `+4 Tb`;
+};

@@ -221,6 +221,13 @@ ul {
   transform: scale(0.9, 0.9);
 }
 
+.button:disabled {
+  transform: none;
+  background-color: #dddada;
+  box-shadow: none;
+  border-color: #dddada;
+}
+
 .product-list {
   padding-bottom: 50px;
 }
@@ -273,6 +280,10 @@ ul {
   box-shadow: inset 0px 0px 13px 13px rgba(14, 73, 181, 1);
 }
 
+.filter.active {
+  background: #102243;
+}
+
 .filter .icon-button__icon {
   background: center / contain no-repeat url("../img/icons/filter.svg");
 }
@@ -287,13 +298,12 @@ ul {
 
 .products {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   gap: 5%;
 }
 
 .product-card__block {
-  margin-bottom: 50px;
+  margin: 0 0 50px;
 }
 
 .product-card {
@@ -404,7 +414,9 @@ ul {
   cursor: pointer;
 }
 
-.product-card__like-checkbox {
+.product-card__like-checkbox,
+.filters__title-checkbox,
+.filters__content-checkbox {
   position: absolute;
   width: 20px;
   height: 20px;
@@ -413,4 +425,122 @@ ul {
 
 .product-card__like-checkbox:checked ~ .icon--empty-heart {
   background: center / 100% no-repeat url("../img/icons/like_full.svg");
+}
+
+.products__block {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.filters__block {
+  margin-right: 5%;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 30%;
+  min-width: 300px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0px 0px 25px rgb(0 0 0 / 15%);
+  border-radius: 10px;
+}
+
+.filters__item {
+  position: relative;
+}
+
+.filters__title-label {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 15px 10px 30px;
+  border-top: 1px solid #dddada;
+  font-size: 18px;
+  color: #000000;
+  cursor: pointer;
+}
+
+.filters__item:first-child .filters__title-label {
+  border-top: none;
+}
+
+.filters__item:last-child .filters__title-label {
+  border-bottom: 1px solid #dddada;
+}
+
+.filters__item:last-child
+  .filters__title-checkbox:checked
+  ~ .filters__title-label {
+  border-bottom: 1px solid transparent;
+}
+
+.icon--arrow {
+  background: center / contain no-repeat url("../img/icons/arrow_left.svg");
+  transition: transform 250ms;
+}
+
+.filters__title-checkbox:checked ~ .filters__title-label .icon--arrow {
+  transform: rotate(90deg);
+}
+
+.filters__content {
+  transition: opacity 250ms;
+}
+
+.filters__title-checkbox ~ .filters__content {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.filters__title-checkbox:checked ~ .filters__content {
+  padding: 20px 30px 15px 30px;
+  height: auto;
+  opacity: 1;
+}
+
+.filters__label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  color: #000000;
+  cursor: pointer;
+}
+
+.filters__input {
+  width: 100%;
+  max-width: 180px;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #e2e2e2;
+  border-radius: 5px;
+  outline: none;
+}
+
+.filters__checkbox-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  color: #000000;
+  cursor: pointer;
+}
+
+.icon--checkbox {
+  margin-right: 12px;
+  background: #c4c4c4;
+}
+
+.filters__content-checkbox:checked ~ .icon--checkbox {
+  background: center / contain no-repeat url("../img/icons/ok.svg"), #c4c4c4;
+}
+
+.filters .button {
+  width: fit-content;
+  margin: 30px auto;
+}
+
+.inactive {
+  display: none;
 }

@@ -52,36 +52,22 @@
       </section>
       <section class="product-list" aria-label="product list">
         <div class="container">
-          <div class="search search__block">
-            <div class="search__icon-container">
-              <div class="search__icon"></div>
-            </div>
-            <input
-              type="text"
-              name="search"
-              id="search"
-              class="search__input"
-              placeholder="Enter device name..."
-            />
-            <button class="icon-button filter">
-              <span class="icon-button__content">
-                <span class="icon-button__icon"></span>
-              </span>
-            </button>
-            <button class="icon-button sort">
-              <span class="icon-button__content">
-                <span class="icon-button__icon"></span>
-              </span>
-            </button>
+          <div id="controls"></div>
+          <div class="products__block" id="list">
+            <div class="products" id="products"></div>
           </div>
-          <!-- <div class="filters"></div> -->
-          <div class="products" id="products"></div>
         </div>
       </section>
     </main>
-    <script type="module" src="./js/items.js"></script>
-    <script type="module" src="./js/utils.js"></script>
-    <script type="module" src="./js/products.js"></script>
+    <script type="module" src="./js/data/items.js"></script>
+    <script type="module" src="./js/helpers/utils.js"></script>
+    <script type="module" src="./js/helpers/EventEmitter.js"></script>
+    <script type="module" src="./js/htmlTemplates/filters.js"></script>
+    <script type="module" src="./js/htmlTemplates/product.js"></script>
+    <script type="module" src="./js/htmlTemplates/controls.js"></script>
+    <script type="module" src="./js/modules/products.js"></script>
+    <script type="module" src="./js/modules/filters.js"></script>
+    <script type="module" src="./js/modules/controls.js"></script>
     <script type="module" src="./js/main.js"></script>
   </body>
 </html>

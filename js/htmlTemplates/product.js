@@ -1,6 +1,6 @@
-import { qtyFormater } from "./utils.js";
+import { qtyFormater } from "../helpers/utils.js";
 
-const productCard = (card) => {
+export const productCard = (card) => {
   const { name, imgUrl, id, price, orderInfo } = card;
 
   const reviews = orderInfo.inStock
@@ -72,25 +72,3 @@ const productCard = (card) => {
   </article>
 `;
 };
-
-export class Products {
-  constructor(list) {
-    this.products = list;
-    this.parent = document.querySelector("#products");
-    this.clearProducts(this.parent);
-    this.renderProducts(this.products);
-  }
-
-  clearProducts(parent) {
-    if (parent) {
-      while (parent.lastChild) {
-        parent.removeChild(parent.lastChild);
-      }
-    }
-  }
-
-  renderProducts(products) {
-    const html = products.map((product) => productCard(product)).join("");
-    return (this.parent.innerHTML = html);
-  }
-}
