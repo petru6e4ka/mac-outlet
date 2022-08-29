@@ -1,4 +1,5 @@
 import { memoryFormater } from "../helpers/utils.js";
+import { displayFormater } from "../helpers/utils.js";
 
 export const filtersItemTemplate = (name, value, label) => `
   <label for="${value}" class="filters__checkbox-label">
@@ -32,7 +33,13 @@ export const filtersForm = (filters) => {
     .join("");
 
   const displays = display
-    .map((d) => filtersItemTemplate("display", d, d))
+    .map((d) =>
+      filtersItemTemplate(
+        "display",
+        Object.values(d).join("-"),
+        displayFormater(d)
+      )
+    )
     .join("");
 
   return `<form

@@ -1,28 +1,44 @@
 import { filtersForm } from "../htmlTemplates/filters.js";
 import EventEmitter from "../helpers/EventEmitter.js";
 
+const filterConfig = {
+  price: {},
+  color: {},
+  memory: {},
+  os: {},
+  display: [
+    {
+      min: 2,
+      max: 5,
+    },
+    {
+      min: 5,
+      max: 7,
+    },
+    {
+      min: 7,
+      max: 12,
+    },
+    {
+      min: 12,
+      max: 16,
+    },
+    {
+      min: 16,
+    },
+  ],
+};
+
 export class Filters {
   constructor(list) {
-    this.filters = {
-      price: {},
-      color: {},
-      memory: {},
-      os: {},
-      display: [
-        "2 - 5 inch",
-        "5 - 7 inch",
-        "7 - 12 inch",
-        "12 - 16 inch",
-        "+16 inch",
-      ],
-    };
+    this.filters = filterConfig;
     this.customFilters = {};
     this.parent = document.querySelector("#list");
     this.block = document.forms.filters;
     this.events = new EventEmitter();
     this.fillFilters(list, this.filters);
     this.renderFilters(this.filters);
-    this.setChanges();
+    this.setOnChange();
   }
 
   fillFilters(list, filters) {
@@ -67,7 +83,7 @@ export class Filters {
     return this.parent.insertAdjacentHTML("afterbegin", filtersForm(filters));
   }
 
-  setChanges() {
+  setOnChange() {
     const form = document.forms.filters;
 
     form.addEventListener("change", (e) => {

@@ -4,7 +4,7 @@ import EventEmitter from "../helpers/EventEmitter.js";
 export class Products {
   constructor(list) {
     this.products = list;
-    this.filtered = list;
+    this.filtered = list.slice(0);
     this.parent = document.querySelector("#products");
     this.events = new EventEmitter();
     this.clearProducts(this.parent);
@@ -67,6 +67,10 @@ export class Products {
       this.filterByMemory(memory);
     }
 
+    if (filterDisplay) {
+      this.filterByDisplay(filterDisplay);
+    }
+
     this.clearProducts(this.parent);
     this.renderProducts(this.filtered);
     this.productClick();
@@ -84,6 +88,22 @@ export class Products {
 
   filterByMemory(memory) {
     this.filtered = this.filtered.filter((elem) => elem.storage in memory);
+  }
+
+  filterByDisplay(filterDisplay) {
+    const filters = Object.keys(filterDisplay).map((elem) => {
+      const filterArr = elem.split("-");
+      return {
+        min: Number(filterArr[0]),
+        max: filterArr[1] ? Number(filterArr[1]) : Infinity,
+      };
+    });
+
+    this.filtered = this.filtered.filter((elem) =>
+      filters.some(
+        (filter) => filter.min <= elem.display && filter.max >= elem.display
+      )
+    );
   }
 
   showAll() {

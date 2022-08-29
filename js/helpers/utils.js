@@ -20,3 +20,15 @@ export const memoryFormater = (num) => {
 
   return `+4 Tb`;
 };
+
+export const displayFormater = (num) => {
+  const { min, max } = num;
+
+  if (min && max) {
+    return `${min} - ${max} inch`;
+  }
+
+  if (min && !max) {
+    return `+${min} inch`;
+  }
+};

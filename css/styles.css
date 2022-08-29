@@ -298,6 +298,7 @@ ul {
 }
 
 .products {
+  flex: 2;
   display: flex;
   flex-wrap: wrap;
   gap: 5%;
@@ -440,6 +441,8 @@ ul {
 }
 
 .filters {
+  flex: 1;
+  max-width: 33.333%;
   display: flex;
   flex-direction: column;
   flex-basis: 30%;
