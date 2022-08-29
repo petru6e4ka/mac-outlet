@@ -32,3 +32,6 @@ export const displayFormater = (num) => {
     return `+${min} inch`;
   }
 };
+
+export const randomNumber = () =>
+  qtyFormater(Math.floor(Math.random() * 10000));

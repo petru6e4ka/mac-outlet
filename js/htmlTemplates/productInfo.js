@@ -1,4 +1,4 @@
-import { qtyFormater } from "../helpers/utils.js";
+import { randomNumber } from "../helpers/utils.js";
 
 export const productInfo = (elem) => {
   const { imgUrl, color, os, chip, size, name, orderInfo, price, id } = elem;
@@ -6,6 +6,46 @@ export const productInfo = (elem) => {
   const addBtn = orderInfo.inStock
     ? `<button class="button" name="add" data-add-btn="${id}">Add to cart</button>`
     : `<button class="button" name="add" data-add-btn="${id}" disabled>Add to cart</button>`;
+
+  const colorBlock = color.length
+    ? `<p>
+      Color: 
+      <span class="black">${color.join(", ")}</span>
+    </p>`
+    : "";
+
+  const osBlock = os
+    ? `<p>
+      Operating system: 
+      <span class="black">${os}</span>
+    </p>`
+    : "";
+
+  const chipBlock = chip
+    ? `<p>
+      Chip: 
+      <span class="black">${chip.name}</span>
+    </p>`
+    : "";
+
+  const sizeBlock = size
+    ? `<p>
+      Height: 
+      <span class="black">${size.height} cm</span>
+    </p>
+    <p>
+      Width: 
+      <span class="black">${size.width} cm</span>
+    </p>
+    <p>
+      Depth: 
+      <span class="black">${size.depth} cm</span>
+    </p>
+    <p>
+      Weight: 
+      <span class="black">${size.weight} g</span>
+    </p>`
+    : "";
 
   return `
 <section class="product__modal">
@@ -26,41 +66,15 @@ export const productInfo = (elem) => {
         </p>
       </div>
       <div class="product-card__orders">
-        <span class="bold product-card__footer-line">${qtyFormater(
-          price * 4
-        )}</span>
+        <span class="bold product-card__footer-line">${randomNumber()}</span>
         <span class="product-card__footer-line">orders</span>
       </div>
     </div>
     <div class="product__text">
-      <p>
-        Color: 
-        <span class="black">${color.join(", ")}</span>
-      </p>
-      <p>
-        Operating system: 
-        <span class="black">${os}</span>
-      </p>
-      <p>
-        Chip: 
-        <span class="black">${chip.name}, ${chip.cores}</span>
-      </p>
-      <p>
-        Height: 
-        <span class="black">${size.height} cm</span>
-      </p>
-      <p>
-        Width: 
-        <span class="black">${size.width} cm</span>
-      </p>
-      <p>
-        Depth: 
-        <span class="black">${size.depth} cm</span>
-      </p>
-      <p>
-        Weight: 
-        <span class="black">${size.weight} g</span>
-      </p>
+      ${colorBlock}
+      ${osBlock}
+      ${chipBlock}
+      ${sizeBlock}
     </div>
   </div>
   <div class="product__actions">

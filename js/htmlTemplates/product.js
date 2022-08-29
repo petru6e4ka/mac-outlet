@@ -1,4 +1,4 @@
-import { qtyFormater } from "../helpers/utils.js";
+import { randomNumber } from "../helpers/utils.js";
 
 export const productCard = (card) => {
   const { name, imgUrl, id, price, orderInfo } = card;
@@ -50,9 +50,7 @@ export const productCard = (card) => {
         </p>
       </div>
       <div class="product-card__orders">
-        <span class="bold product-card__footer-line">${qtyFormater(
-          price * 4
-        )}</span>
+        <span class="bold product-card__footer-line">${randomNumber()}</span>
         <span class="product-card__footer-line">orders</span>
       </div>
       <label class="product-card__like" for="product-like-${id}">
