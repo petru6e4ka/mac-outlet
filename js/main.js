@@ -42,6 +42,10 @@ class App {
       PRODUCT.ADD_TO_CART,
       this.cart.addItem.bind(this.cart)
     );
+    this.modal.events.subscribe(
+      PRODUCT.ADD_TO_CART,
+      this.cart.addItem.bind(this.cart)
+    );
   }
 }
 

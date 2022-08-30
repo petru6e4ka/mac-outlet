@@ -1,8 +1,12 @@
 import { modalTemplate } from "../htmlTemplates/modal.js";
+import EventEmitter from "../helpers/EventEmitter.js";
+import { PRODUCT } from "../helpers/eventNames.js";
 
 export class Modal {
   constructor() {
     this.parent = document.querySelector("#portal");
+    this.events = new EventEmitter();
+
     this.renderModal();
     this.onOverlayClick();
     this.onModalContentClick();
@@ -42,11 +46,23 @@ export class Modal {
   }
 
   openModal(elem, data) {
+    this.product = data;
     const content = elem(data);
     const portal = document.querySelector("#portal");
     const modal = document.querySelector("#portal-content");
 
     modal.innerHTML = content;
+    this.onBuy();
     portal.classList.remove("hidden");
+  }
+
+  onBuy() {
+    this.parent
+      .querySelector('button[name="add"]:not([disabled])')
+      .addEventListener("click", this.addToCartCall.bind(this));
+  }
+
+  addToCartCall() {
+    this.events.emit(PRODUCT.ADD_TO_CART, this.product);
   }
 }
