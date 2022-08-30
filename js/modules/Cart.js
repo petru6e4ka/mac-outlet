@@ -1,4 +1,5 @@
 import { basketIcon, basket } from "../htmlTemplates/basket.js";
+import { cart } from "../data/storage.js";
 
 export class Cart {
   constructor() {
@@ -10,7 +11,8 @@ export class Cart {
     };
     this.isOpened = false;
     this.parent = document.querySelector("#basket");
-    this.items = [];
+    this.items = cart.get() || [];
+    this.countTotal();
     this.renderCart();
     this.onClick();
     this.onExternalClick();
@@ -116,6 +118,7 @@ export class Cart {
     this.renderCart();
     this.isOpened = false;
     this.onModalClick();
+    cart.set(this.items);
   }
 
   countTotal() {
@@ -154,6 +157,8 @@ export class Cart {
     if (this.item.quantity >= this.max) {
       this.increaseBtn.disabled = true;
     }
+
+    cart.set(this.items);
   }
 
   onReduce() {
@@ -174,6 +179,8 @@ export class Cart {
     if (this.item.quantity < this.max) {
       this.increaseBtn.disabled = false;
     }
+
+    cart.set(this.items);
   }
 
   onDelete(e) {
@@ -195,5 +202,7 @@ export class Cart {
     if (this.total.quantity && badge) {
       badge.lastElementChild.textContent = this.total.quantity;
     }
+
+    cart.set(this.items);
   }
 }
