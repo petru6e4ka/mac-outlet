@@ -92,12 +92,16 @@ export class Filters {
         maxInput.value = this.max;
       }
 
-      const price = {
+      this.customFilters.price = {
         min: minInput.value,
         max: maxInput.value,
       };
 
-      this.events.emit(FILTERS.APPLY, { ...this.customFilters, price });
+      this.customFilter = Object.keys(this.customFilters)
+        .filter((key) => this.customFilters[key] !== null)
+        .reduce((obj, key) => ({ ...obj, [key]: this.customFilters[key] }), {});
+
+      this.events.emit(FILTERS.APPLY, this.customFilter);
     });
 
     form.addEventListener("reset", () => {

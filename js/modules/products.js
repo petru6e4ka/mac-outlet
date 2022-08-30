@@ -63,6 +63,10 @@ export class Products {
   }
 
   applyFilter(filters) {
+    if (JSON.stringify(filters) === JSON.stringify(this.filters)) return;
+
+    this.filters = { ...filters };
+
     const {
       color: filterColor,
       memory,
@@ -136,6 +140,7 @@ export class Products {
 
   showAll() {
     this.filtered = this.products.slice(0);
+    this.filters = null;
     this.clearProducts(this.parent);
     this.renderProducts(this.filtered);
     this.onClick();
