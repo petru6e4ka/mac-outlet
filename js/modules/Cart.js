@@ -197,12 +197,12 @@ export class Cart {
 
     if (!this.total.quantity && badge) {
       badge.remove();
+      cart.remove();
     }
 
     if (this.total.quantity && badge) {
       badge.lastElementChild.textContent = this.total.quantity;
+      cart.set(this.items);
     }
-
-    cart.set(this.items);
   }
 }
