@@ -1,15 +1,16 @@
 import { productCard } from "../htmlTemplates/product.js";
 import EventEmitter from "../helpers/EventEmitter.js";
+import { PRODUCT } from "../helpers/eventNames.js";
 
 export class Products {
   constructor(list) {
-    this.products = list;
-    this.filtered = list.slice(0);
+    this.products = list.slice(0);
     this.parent = document.querySelector("#products");
     this.events = new EventEmitter();
     this.clearProducts(this.parent);
-    this.renderProducts(this.filtered);
-    this.productClick();
+    this.renderProducts(this.products);
+    this.onClick();
+    this.onBuy();
   }
 
   renderProducts(products) {
@@ -27,7 +28,7 @@ export class Products {
     }
   }
 
-  productClick() {
+  onClick() {
     this.parent
       .querySelectorAll("a")
       .forEach((elem) =>
@@ -42,7 +43,23 @@ export class Products {
       (elem) => elem.id === Number(e.currentTarget.dataset.productLink)
     );
 
-    this.events.emit("openProductInfo", product);
+    this.events.emit(PRODUCT.OPEN_INFO, product);
+  }
+
+  onBuy() {
+    this.parent
+      .querySelectorAll('button[name="add"]:not([disabled])')
+      .forEach((elem) =>
+        elem.addEventListener("click", this.addToCartCall.bind(this))
+      );
+  }
+
+  addToCartCall(e) {
+    const product = this.products.find(
+      (elem) => elem.id === Number(e.currentTarget.dataset.addBtn)
+    );
+
+    this.events.emit(PRODUCT.ADD_TO_CART, product);
   }
 
   applyFilter(filters) {
@@ -78,7 +95,7 @@ export class Products {
 
     this.clearProducts(this.parent);
     this.renderProducts(this.filtered);
-    this.productClick();
+    this.onClick();
   }
 
   filterByColor(filterColor) {
@@ -121,6 +138,6 @@ export class Products {
     this.filtered = this.products.slice(0);
     this.clearProducts(this.parent);
     this.renderProducts(this.filtered);
-    this.productClick();
+    this.onClick();
   }
 }

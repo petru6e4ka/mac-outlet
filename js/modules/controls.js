@@ -1,5 +1,6 @@
 import { controls } from "../htmlTemplates/controls.js";
 import EventEmitter from "../helpers/EventEmitter.js";
+import { FILTERS } from "../helpers/eventNames.js";
 
 export class Controls {
   constructor() {
@@ -34,12 +35,12 @@ export class Controls {
 
     if (isActive) {
       filterBtn.classList.remove("active");
-      this.events.emit("closeFilter");
+      this.events.emit(FILTERS.CLOSE);
 
       return;
     }
 
     filterBtn.classList.add("active");
-    this.events.emit("openFilter");
+    this.events.emit(FILTERS.OPEN);
   }
 }

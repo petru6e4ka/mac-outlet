@@ -1,33 +1,7 @@
 import { filtersForm } from "../htmlTemplates/filters.js";
 import EventEmitter from "../helpers/EventEmitter.js";
-
-const filterConfig = {
-  price: {},
-  color: {},
-  memory: {},
-  os: {},
-  display: [
-    {
-      min: 2,
-      max: 5,
-    },
-    {
-      min: 5,
-      max: 7,
-    },
-    {
-      min: 7,
-      max: 12,
-    },
-    {
-      min: 12,
-      max: 16,
-    },
-    {
-      min: 16,
-    },
-  ],
-};
+import { FILTERS } from "../helpers/eventNames.js";
+import { filterConfig } from "../helpers/configs.js";
 
 export class Filters {
   constructor(list) {
@@ -123,12 +97,12 @@ export class Filters {
         max: maxInput.value,
       };
 
-      this.events.emit("applyFilter", { ...this.customFilters, price });
+      this.events.emit(FILTERS.APPLY, { ...this.customFilters, price });
     });
 
     form.addEventListener("reset", () => {
       this.customFilters = {};
-      this.events.emit("clearFilter");
+      this.events.emit(FILTERS.RESET);
     });
   }
 
