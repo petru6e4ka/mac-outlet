@@ -6,24 +6,15 @@ export class Controls {
   constructor() {
     this.parent = document.querySelector("#controls");
     this.events = new EventEmitter();
-    this.clearControls(this.parent);
     this.renderControls();
-    this.filterBtnClick();
-  }
-
-  clearControls(parent) {
-    if (parent) {
-      while (parent.lastChild) {
-        parent.removeChild(parent.lastChild);
-      }
-    }
+    this.onFilterClick();
   }
 
   renderControls() {
     return (this.parent.innerHTML = controls());
   }
 
-  filterBtnClick() {
+  onFilterClick() {
     const filterBtn = document.querySelector("#filter");
 
     filterBtn.addEventListener("click", this.filterCall.bind(this));
