@@ -109,7 +109,11 @@ export class Cart {
       this.items.push({ ...item, quantity: 1 });
     }
 
-    if (isInCart && product.quantity < this.max) {
+    if (
+      isInCart &&
+      product.quantity < this.max &&
+      product.quantity < product.orderInfo.inStock
+    ) {
       product.quantity += 1;
     }
 
@@ -140,7 +144,10 @@ export class Cart {
   }
 
   onIncrease() {
-    if (this.item.quantity < this.max) {
+    if (
+      this.item.quantity < this.max &&
+      this.item.quantity < this.item.orderInfo.inStock
+    ) {
       this.item.quantity += 1;
       this.countTotal();
 
@@ -154,7 +161,10 @@ export class Cart {
       this.reduceBtn.disabled = false;
     }
 
-    if (this.item.quantity >= this.max) {
+    if (
+      this.item.quantity >= this.max ||
+      this.item.quantity >= this.item.orderInfo.inStock
+    ) {
       this.increaseBtn.disabled = true;
     }
 
@@ -176,7 +186,10 @@ export class Cart {
       this.reduceBtn.disabled = true;
     }
 
-    if (this.item.quantity < this.max) {
+    if (
+      this.item.quantity < this.max ||
+      this.item.quantity < this.item.orderInfo.inStock
+    ) {
       this.increaseBtn.disabled = false;
     }
 

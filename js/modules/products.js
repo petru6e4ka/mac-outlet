@@ -1,20 +1,25 @@
 import { productCard } from "../htmlTemplates/product.js";
 import EventEmitter from "../helpers/EventEmitter.js";
 import { PRODUCT } from "../helpers/eventNames.js";
+import { filtering } from "../data/storage.js";
 
 export class Products {
-  constructor(list) {
+  constructor(list, filtering) {
     this.products = list.slice(0);
     this.parent = document.querySelector("#products");
     this.events = new EventEmitter();
     this.clearProducts(this.parent);
-    this.renderProducts(this.products);
+    this.renderProducts(this.products, filtering);
     this.onClick();
     this.onBuy();
   }
 
-  renderProducts(products) {
+  renderProducts(products, filtering) {
     if (!products) return;
+    if (filtering) {
+      this.applyFilter(filtering);
+      return;
+    }
 
     const html = products.map((product) => productCard(product)).join("");
     return (this.parent.innerHTML = html);
@@ -48,7 +53,7 @@ export class Products {
 
   onBuy() {
     this.parent
-      .querySelectorAll('button[name="add"]:not([disabled])')
+      .querySelectorAll('button[name="add"]')
       .forEach((elem) =>
         elem.addEventListener("click", this.addToCartCall.bind(this))
       );
@@ -65,6 +70,7 @@ export class Products {
   applyFilter(filters) {
     if (JSON.stringify(filters) === JSON.stringify(this.filters)) return;
 
+    filtering.set(filters);
     this.filters = { ...filters };
 
     const {
@@ -77,25 +83,11 @@ export class Products {
 
     this.filtered = this.products.slice(0);
 
-    if (filterColor) {
-      this.filterByColor(filterColor);
-    }
-
-    if (filterOs) {
-      this.filterByOs(filterOs);
-    }
-
-    if (memory) {
-      this.filterByMemory(memory);
-    }
-
-    if (filterDisplay) {
-      this.filterByDisplay(filterDisplay);
-    }
-
-    if (filterPrice) {
-      this.filterByPrice(filterPrice);
-    }
+    if (filterColor) this.filterByColor(filterColor);
+    if (filterOs) this.filterByOs(filterOs);
+    if (memory) this.filterByMemory(memory);
+    if (filterDisplay) this.filterByDisplay(filterDisplay);
+    if (filterPrice) this.filterByPrice(filterPrice);
 
     this.clearProducts(this.parent);
     this.renderProducts(this.filtered);
@@ -141,6 +133,7 @@ export class Products {
   showAll() {
     this.filtered = this.products.slice(0);
     this.filters = null;
+    filtering.remove();
     this.clearProducts(this.parent);
     this.renderProducts(this.filtered);
     this.onClick();

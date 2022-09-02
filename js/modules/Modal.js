@@ -58,7 +58,7 @@ export class Modal {
 
   onBuy() {
     this.parent
-      .querySelector('button[name="add"]:not([disabled])')
+      .querySelector('button[name="add"]')
       .addEventListener("click", this.addToCartCall.bind(this));
   }
 

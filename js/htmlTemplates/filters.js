@@ -1,7 +1,7 @@
 import { memoryFormater } from "../helpers/utils.js";
 import { displayFormater } from "../helpers/utils.js";
 
-export const filtersItemTemplate = (name, value, label) => `
+export const filtersItemTemplate = (name, value, label, checked = false) => `
   <label for="${value}" class="filters__checkbox-label">
     <input
       type="checkbox"
@@ -9,37 +9,73 @@ export const filtersItemTemplate = (name, value, label) => `
       id="${value}"
       value="${value}"
       class="filters__content-checkbox"
+      ${checked ? "checked" : ""}
     />
     <span class="icon icon--checkbox"></span>
     <span>${label}</span>
   </label>
 `;
 
-export const filtersForm = (filters) => {
+export const filtersForm = (filters, custom) => {
   const { price, color, memory, os, display } = filters;
+  const {
+    price: customPrice,
+    color: customColor,
+    memory: customMemory,
+    os: customOs,
+    display: customDisplay,
+  } = custom;
 
   const colors = Object.keys(color)
     .sort()
-    .map((c) => filtersItemTemplate("color", c, c))
+    .map((c) => {
+      if (customColor) {
+        return filtersItemTemplate("color", c, c, c in customColor);
+      }
+      return filtersItemTemplate("color", c, c);
+    })
     .join("");
 
   const memories = Object.keys(memory)
-    .map((m) => filtersItemTemplate("memory", m, memoryFormater(m)))
+    .map((m) => {
+      if (customMemory) {
+        return filtersItemTemplate(
+          "memory",
+          m,
+          memoryFormater(m),
+          m in customMemory
+        );
+      }
+      return filtersItemTemplate("memory", m, memoryFormater(m));
+    })
     .join("");
 
   const oses = Object.keys(os)
     .sort()
-    .map((o) => filtersItemTemplate("os", o, o))
+    .map((o) => {
+      if (customOs) {
+        return filtersItemTemplate("os", o, o, o in customOs);
+      }
+      return filtersItemTemplate("os", o, o);
+    })
     .join("");
 
   const displays = display
-    .map((d) =>
-      filtersItemTemplate(
+    .map((d) => {
+      if (customDisplay) {
+        return filtersItemTemplate(
+          "display",
+          Object.values(d).join("-"),
+          displayFormater(d),
+          Object.values(d).join("-") in customDisplay
+        );
+      }
+      return filtersItemTemplate(
         "display",
         Object.values(d).join("-"),
         displayFormater(d)
-      )
-    )
+      );
+    })
     .join("");
 
   return `<form
@@ -71,7 +107,7 @@ export const filtersForm = (filters) => {
             max="${price.max}"
             placeholder="${price.min}"
             class="filters__input"
-            value="${price.min}"
+            value="${customPrice?.min || price.min}"
           />
         </label>
         <label for="price-max" class="filters__label">
@@ -84,7 +120,7 @@ export const filtersForm = (filters) => {
             max="${price.max}"
             placeholder="${price.max}"
             class="filters__input"
-            value="${price.max}"
+            value="${customPrice?.max || price.max}"
           />
         </label>
       </div>

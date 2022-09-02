@@ -4,14 +4,14 @@ import { FILTERS } from "../helpers/eventNames.js";
 import { filterConfig } from "../helpers/configs.js";
 
 export class Filters {
-  constructor(list) {
+  constructor(list, filtering) {
     this.filters = filterConfig;
-    this.customFilters = {};
+    this.customFilters = filtering || {};
     this.parent = document.querySelector("#list");
     this.block = document.forms.filters;
     this.events = new EventEmitter();
     this.fillFilters(list, this.filters);
-    this.renderFilters(this.filters);
+    this.renderFilters(this.filters, this.customFilters);
     this.setOnChange();
   }
 
@@ -55,8 +55,11 @@ export class Filters {
     });
   }
 
-  renderFilters(filters) {
-    return this.parent.insertAdjacentHTML("afterbegin", filtersForm(filters));
+  renderFilters(filters, customFilters) {
+    return this.parent.insertAdjacentHTML(
+      "afterbegin",
+      filtersForm(filters, customFilters)
+    );
   }
 
   setOnChange() {
@@ -106,6 +109,18 @@ export class Filters {
 
     form.addEventListener("reset", () => {
       this.customFilters = {};
+      this.parent
+        .querySelectorAll("input[type='checkbox']:checked")
+        .forEach((checkbox) => {
+          if (checkbox.name !== checkbox.value)
+            checkbox.removeAttribute("checked");
+        });
+      this.parent
+        .querySelector("#price-min")
+        .setAttribute("value", this.filters.price.min);
+      this.parent
+        .querySelector("#price-max")
+        .setAttribute("value", this.filters.price.max);
       this.events.emit(FILTERS.RESET);
     });
   }
