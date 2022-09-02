@@ -19,3 +19,4 @@ const ls = (key) => {
 };
 
 export const cart = ls("cart");
+export const filtering = ls("filtering");
