@@ -92,6 +92,7 @@ export class Products {
     this.clearProducts(this.parent);
     this.renderProducts(this.filtered);
     this.onClick();
+    this.onBuy();
   }
 
   filterByColor(filterColor) {
@@ -137,5 +138,6 @@ export class Products {
     this.clearProducts(this.parent);
     this.renderProducts(this.filtered);
     this.onClick();
+    this.onBuy();
   }
 }
