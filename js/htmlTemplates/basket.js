@@ -5,7 +5,7 @@ const empty = () => {
 };
 
 const basketItem = (item) => {
-  const { name, price, imgUrl, quantity, id } = item;
+  const { name, price, imgUrl, quantity, id, orderInfo } = item;
 
   return `
   <li class="basket-modal__item">
@@ -24,7 +24,7 @@ const basketItem = (item) => {
       } name="reduce" value="${id}" data-item-reduce="${id}">&#60;</button>
       <span data-item-quantity="${id}">${quantity}</span>
       <button class="square square--arrow" ${
-        quantity === 4 ? "disabled" : ""
+        quantity === 4 || quantity >= orderInfo.inStock ? "disabled" : ""
       } name="increase" value="${id}" data-item-increase="${id}">&#62;</button>
       <button class="square square--cross" name="delete" value="${id}">X</button>
     </div>
