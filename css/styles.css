@@ -1,0 +1,95 @@
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+h1 {
+  margin: 0 10px 15px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.timestamps {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 55px;
+}
+
+.timestamps__item {
+  position: relative;
+  width: 45px;
+  height: 60px;
+  padding: 0 5px;
+  text-align: right;
+}
+
+.timestamps__item:nth-child(odd)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.timestamps__item:last-child {
+  height: auto;
+}
+
+.timestamps__item:nth-child(even) {
+  font-size: 12px;
+}
+
+.content {
+  display: flex;
+}
+
+.tasklist {
+  position: relative;
+  width: 100%;
+}
+
+.tasklist__row {
+  position: relative;
+  width: 100%;
+  height: 60px;
+}
+
+.tasklist__row:nth-child(odd)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background-color: #ccc;
+}
