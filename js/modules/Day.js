@@ -1,10 +1,22 @@
 import { task } from "../templates/task.js";
+import { tasks } from "../services/storage.js";
 
 class Day {
   constructor(plan) {
+    const savedTasks = tasks.get();
+
+    if (savedTasks) {
+      this.data = savedTasks;
+    }
+
+    if (!savedTasks) {
+      this.data = plan;
+      tasks.set(this.data);
+    }
+
     this.defaultBgColor = "#E2ECF5";
     this.defaultBorderColor = "#6E9ECF";
-    this.plan = plan.reduce(this.reducer.bind(this), []);
+    this.plan = this.data.reduce(this.reducer.bind(this), []);
     this.parent = document.querySelector("#tasks");
 
     this.render();
@@ -45,6 +57,10 @@ class Day {
 
     return (this.parent.innerHTML = tasks);
   }
+
+  // update() {
+  //   console.log(arguments, "day update");
+  // }
 }
 
 export default Day;

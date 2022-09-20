@@ -16,7 +16,8 @@ html {
   box-sizing: inherit;
 }
 
-h1 {
+h1,
+h2 {
   margin: 0 10px 15px;
   font-weight: 400;
   line-height: 1.2;
@@ -91,5 +92,147 @@ ul {
   right: 0;
   left: 0;
   height: 1px;
-  background-color: #ccc;
+  background-color: #eeeeee;
+}
+
+.task {
+  position: absolute;
+  min-width: 200px;
+  padding: 5px;
+  background: #e2ecf5;
+  border-left: 2px solid #6e9ecf;
+}
+
+.modal__overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 200;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  opacity: 1;
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  max-height: 88vh;
+  margin: 0;
+  background-color: #fff;
+  border: 1px solid #e2e2e2;
+  transform: translateY(0);
+  transition: transform 0.5s ease;
+  transition-delay: 0.2s;
+}
+
+.hidden .modal__overlay {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.hidden .modal {
+  transform: translateY(100%);
+}
+
+.modal__content {
+  position: relative;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px;
+}
+
+.form-title {
+  margin-left: 0;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.form-field {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  margin-bottom: 20px;
+}
+
+.form-input {
+  background: none;
+  width: 200px;
+  height: 1em;
+  padding: 16px 14px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1em;
+  color: rgba(0, 0, 0, 0.87);
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid rgba(25, 118, 210, 0.5);
+  outline: none;
+  cursor: text;
+}
+
+.form-picker {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.picker-label {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.form-input:focus {
+  border: 1px solid rgb(25, 118, 210);
+}
+
+.form-label {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.form-btn {
+  margin-right: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background-color: transparent;
+  outline: 0px;
+  cursor: pointer;
+  vertical-align: middle;
+  appearance: none;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  text-transform: uppercase;
+  min-width: 64px;
+  padding: 5px 15px;
+  border-radius: 4px;
+  border: 1px solid rgba(25, 118, 210, 0.5);
+  color: rgb(25, 118, 210);
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.form-btn:hover,
+.form-btn:active {
+  border: 1px solid rgb(25, 118, 210);
+  background-color: rgba(25, 118, 210, 0.04);
 }
