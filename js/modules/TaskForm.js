@@ -1,3 +1,5 @@
+import { timeConverter } from "../utils/time.js";
+
 export class TaskForm {
   constructor() {
     this.start = "";
@@ -13,7 +15,7 @@ export class TaskForm {
     this[evt.target.name] = evt.target.value;
     console.log(evt.target.name, evt.target.value);
 
-    // TODO: validity check
+    if (this.validityCheck()) return;
     // TODO: event for rerender day
   }
 
@@ -28,13 +30,61 @@ export class TaskForm {
       this.startElem.addEventListener("change", this.stateSetter);
       this.endElem.addEventListener("change", this.stateSetter);
       this.colorElem.addEventListener("change", this.stateSetter);
+
+      this.start = this.startElem.getAttribute("value");
+      this.end = this.endElem.getAttribute("value");
+      this.title = this.titleElem.getAttribute("value");
+      this.color = this.colorElem.getAttribute("value");
     }
+
+    this.onAction();
+  }
+
+  validityCheck() {
+    if (!this.title.trim()) {
+      //console.log("empty title");
+      return;
+    }
+
+    if (!this.color) {
+      //console.log("empty color");
+      return;
+    }
+
+    if (!this.start) {
+      //console.log("empty start");
+      return;
+    }
+
+    if (!this.end) {
+      //console.log("empty end");
+      return;
+    }
+
+    const startDate = timeConverter.timeValidation(this.start);
+    const endDate = timeConverter.timeValidation(this.end);
+
+    if (
+      this.start.length < 4 ||
+      this.end.length < 4 ||
+      !startDate ||
+      !endDate
+    ) {
+      //console.log("invalid date format");
+      return;
+    }
+
+    if (Number(startDate) >= Number(endDate)) {
+      //console.log("invalid time gap");
+      return;
+    }
+
+    return true;
   }
 
   onAction() {
     // this.deleteElem = document.querySelector("#delete");
-    // this.updateElem = document.querySelector("#update");
-    // this.addElem = document.querySelector("#add");
+    this.submitElem = document.querySelector("#submit");
     // if(this.deleteElem && this.updateElem) {
     //   this.deleteElem.addEventListener('click', )
     //   this.updateElem.addEventListener('click', )
@@ -62,19 +112,19 @@ export class TaskForm {
   }
 
   submitHandler(evt) {
-    if (!evt.target.checkValidity()) {
-      return;
-    }
+    evt.preventDefault();
 
+    if (!evt.target.checkValidity()) return;
+    if (!this.validityCheck()) return;
+
+    console.log(this.color, this.start, this.end, this.title);
     console.log("submited");
 
     // TODO: saving to storage
     // TODO: mutating data
     // TODO: close modal
-    // TODO: error handling
 
     evt.target.reset();
-    evt.preventDefault();
   }
 
   onSubmit() {

@@ -1,5 +1,6 @@
 import { task } from "../templates/task.js";
 import { tasks } from "../services/storage.js";
+import { MIN_WIDTH } from "../constants/constants.js";
 
 class Day {
   constructor(plan) {
@@ -39,9 +40,9 @@ class Day {
       currentValue.start > prevElement.start &&
       currentValue.start < prevElement.start + prevElement.duration
     ) {
-      _task.left = prevElement.left + 200;
-      _task.width = `calc(100% - ${prevElement.left + 200}px)`;
-      prevElement.width = `200px`;
+      _task.left = prevElement.left + MIN_WIDTH;
+      _task.width = `calc(100% - ${prevElement.left + MIN_WIDTH}px)`;
+      prevElement.width = `${MIN_WIDTH}px`;
       prevElement.minTitle = `${
         prevElement.title.length > 25
           ? prevElement.minTitle.slice(0, 25) + "..."
@@ -57,10 +58,6 @@ class Day {
 
     return (this.parent.innerHTML = tasks);
   }
-
-  // update() {
-  //   console.log(arguments, "day update");
-  // }
 }
 
 export default Day;

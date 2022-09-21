@@ -13,7 +13,7 @@ class App {
   }
 
   onAdd() {
-    const container = document.querySelector("#tasklist");
+    const container = document.querySelector("#tasklist-columns");
 
     if (container) {
       container.addEventListener(

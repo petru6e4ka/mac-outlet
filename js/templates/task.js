@@ -1,3 +1,5 @@
+import { MINUTES_TO_PIXELS } from "../constants/constants.js";
+
 export const task = (task) => {
   const { start, duration, minTitle, bg, left, width, border } = task;
 
@@ -5,9 +7,9 @@ export const task = (task) => {
     <div class="task"
       style="
         width: ${width ? width : "100%"}; 
-        top: ${start * 2}px; 
+        top: ${start * MINUTES_TO_PIXELS}px; 
         ${left ? `left: ${left}px;` : ""} 
-        height: ${duration * 2}px; 
+        height: ${duration * MINUTES_TO_PIXELS}px; 
       ">
         ${minTitle}
       </div>

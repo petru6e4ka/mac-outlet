@@ -79,6 +79,10 @@ ul {
   width: 100%;
 }
 
+.tasklist__column {
+  cursor: pointer;
+}
+
 .tasklist__row {
   position: relative;
   width: 100%;
@@ -207,7 +211,7 @@ ul {
 }
 
 .form-btn {
-  margin-right: 16px;
+  margin: 0 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -235,4 +239,11 @@ ul {
 .form-btn:active {
   border: 1px solid rgb(25, 118, 210);
   background-color: rgba(25, 118, 210, 0.04);
+}
+
+.form-btn:disabled {
+  border: 1px solid rgb(120, 120, 120);
+  background-color: rgba(120, 120, 120, 0.09);
+  color: #555;
+  cursor: auto;
 }
