@@ -1,9 +1,11 @@
 import { modalTemplate } from "../templates/modal.js";
+import EventEmitter from "../events/EventEmitter.js";
+import { TASK } from "../constants/constants.js";
 
 class Modal {
   constructor() {
     this.parent = document.querySelector("#portal");
-
+    this.events = new EventEmitter();
     this.renderModal();
     this.onOverlayClick();
     this.onModalContentClick();
@@ -27,8 +29,10 @@ class Modal {
     const portal = document.querySelector("#portal");
     const modal = document.querySelector("#portal-content");
 
+    this.data = data;
     this.closer = onClose;
     modal.innerHTML = content;
+    this.events.emit(TASK.OPENED, { data, event });
 
     onChange();
     onSave();
@@ -41,6 +45,7 @@ class Modal {
     const modal = document.querySelector("#portal-content");
     this.parent.classList.add("hidden");
     this.clearModal(modal);
+    this.events.emit(TASK.CANCEL, this.data);
   }
 
   onOverlayClick() {

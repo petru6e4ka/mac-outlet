@@ -3,6 +3,7 @@ import Day from "./modules/Day.js";
 import Modal from "./modules/Modal.js";
 import TaskForm from "./modules/TaskForm.js";
 import { taskForm } from "./templates/taskForm.js";
+import { TASK } from "./constants/constants.js";
 
 class App {
   constructor() {
@@ -10,6 +11,9 @@ class App {
     this.modal = new Modal();
     this.taskForm = new TaskForm();
     this.onAdd();
+
+    this.modal.events.subscribe(TASK.OPENED, this.day.update.bind(this.day));
+    this.modal.events.subscribe(TASK.CANCEL, this.day.cancel.bind(this.day));
   }
 
   onAdd() {
