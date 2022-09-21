@@ -15,4 +15,5 @@ export const DAY_LIMIT = {
 export const TASK = {
   OPENED: "OPENED",
   CANCEL: "CANCEL",
+  SAVED: "SAVED",
 };

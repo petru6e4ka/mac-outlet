@@ -14,6 +14,16 @@ class App {
 
     this.modal.events.subscribe(TASK.OPENED, this.day.update.bind(this.day));
     this.modal.events.subscribe(TASK.CANCEL, this.day.cancel.bind(this.day));
+
+    this.taskForm.events.subscribe(
+      TASK.SAVED,
+      this.day.update.bind(this.day, {})
+    );
+
+    this.taskForm.events.subscribe(
+      TASK.SAVED,
+      this.modal.onClose.bind(this.modal)
+    );
   }
 
   onAdd() {

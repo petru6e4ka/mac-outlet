@@ -80,8 +80,15 @@ const timeValidation = (value) => {
   return date;
 };
 
+const getSecondsFromTimeStr = (str) => {
+  const YyMmDd = new Date().toISOString().split("T")[0];
+
+  return new Date([YyMmDd, str]).getTime();
+};
+
 export const timeConverter = {
   timeFormater,
   posYToTimeFormated,
   timeValidation,
+  getSecondsFromTimeStr,
 };

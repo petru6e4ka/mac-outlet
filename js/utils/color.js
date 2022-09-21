@@ -1,18 +1,22 @@
-const lightenDarkenColor = (col, amt) => {
-  const num = parseInt(col, 16);
-  const r = (num >> 16) + amt;
-  const b = ((num >> 8) & 0x00ff) + amt;
-  const g = (num & 0x0000ff) + amt;
-  const newColor = g | (b << 8) | (r << 16);
-
-  return newColor.toString(16);
-};
+function lightenDarkenColor(color, amount) {
+  return (
+    "#" +
+    color
+      .replace(/^#/, "")
+      .replace(/../g, (color) =>
+        (
+          "0" +
+          Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)
+        ).slice(-2)
+      )
+  );
+}
 
 const getBorderColorString = (color) => {
   const colorCode = color.split("").slice(1).join("");
-  const darkenColor = lightenDarkenColor(colorCode, 40);
+  const darkenColor = lightenDarkenColor(colorCode, -60);
 
-  return `border-color: #${darkenColor}`;
+  return `${darkenColor}`;
 };
 
 export const color = {

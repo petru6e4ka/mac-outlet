@@ -1,4 +1,7 @@
+import { DAY_LIMIT, HOUR, TASK } from "../constants/constants.js";
 import { timeConverter } from "../utils/time.js";
+import { tasks } from "../services/storage.js";
+import EventEmitter from "../events/EventEmitter.js";
 
 export class TaskForm {
   constructor() {
@@ -6,7 +9,7 @@ export class TaskForm {
     this.end = "";
     this.title = "";
     this.color = "";
-
+    this.events = new EventEmitter();
     this.stateSetter = this.setState.bind(this);
     this.submitSetter = this.submitHandler.bind(this);
   }
@@ -117,12 +120,27 @@ export class TaskForm {
     if (!evt.target.checkValidity()) return;
     if (!this.validityCheck()) return;
 
-    console.log(this.color, this.start, this.end, this.title);
-    console.log("submited");
+    const newTask = {
+      title: this.title,
+      color: this.color,
+    };
 
-    // TODO: saving to storage
-    // TODO: mutating data
-    // TODO: close modal
+    newTask.start =
+      (timeConverter.getSecondsFromTimeStr(this.start) -
+        timeConverter.getSecondsFromTimeStr(DAY_LIMIT.START_FORMATED)) /
+      1000 /
+      HOUR;
+
+    newTask.duration =
+      (timeConverter.getSecondsFromTimeStr(this.end) -
+        timeConverter.getSecondsFromTimeStr(this.start)) /
+      1000 /
+      HOUR;
+
+    const all = tasks.get().concat([newTask]);
+
+    tasks.set(all);
+    this.events.emit(TASK.SAVED);
 
     evt.target.reset();
   }

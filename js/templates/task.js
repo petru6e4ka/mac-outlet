@@ -10,12 +10,11 @@ export const task = (task) => {
         width: ${width ? width : "100%"}; 
         top: ${start * MINUTES_TO_PIXELS}px; 
         ${left ? `left: ${left}px;` : ""} 
-        height: ${duration * MINUTES_TO_PIXELS}px; 
+        height: ${duration * MINUTES_TO_PIXELS}px;
+        background: ${bg};
+        border-left: 2px solid ${border};
       ">
         ${minTitle}
       </div>
   `;
 };
-
-// background: ${bg};
-// border-left: 2px solid ${border};

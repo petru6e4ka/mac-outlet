@@ -9,10 +9,12 @@ import {
   DEFAULT_DURATION,
   DEFAULT_TITLE,
 } from "../constants/constants.js";
+import { color } from "../utils/color.js";
 
 class Day {
   constructor(plan) {
     const savedTasks = tasks.get();
+
     this.maxPosY =
       HEADER_HEIGHT +
       (DAY_LIMIT.END - DAY_LIMIT.START) * HOUR * MINUTES_TO_PIXELS;
@@ -26,7 +28,7 @@ class Day {
       tasks.set(this.data);
     }
 
-    // this.defaultBgColor = "#E2ECF5";
+    this.defaultBgColor = "#E2ECF5";
     // this.defaultBorderColor = "#6E9ECF";
     this.plan = this.data
       .sort((a, b) => a.start - b.start)
@@ -39,8 +41,10 @@ class Day {
   reducer(previousValue, currentValue) {
     const _task = {
       ...currentValue,
-      // bg: this.defaultBgColor,
-      // border: this.defaultBorderColor,
+      bg: currentValue.color ? currentValue.color : this.defaultBgColor,
+      border: currentValue.color
+        ? color.getBorderColorString(currentValue.color)
+        : color.getBorderColorString(this.defaultBgColor),
       left: 0,
       minTitle: currentValue.title,
       width: "100%",
@@ -74,41 +78,52 @@ class Day {
   }
 
   update({ data, event }) {
-    const newTask = {};
-
-    if (!data) {
-      if (event.pageY >= this.maxPosY) {
-        newTask.start = Math.round(
-          (this.maxPosY - HEADER_HEIGHT) / MINUTES_TO_PIXELS - DEFAULT_DURATION
-        );
-        newTask.duration = DEFAULT_DURATION;
-      } else if (
-        event.pageY + DEFAULT_DURATION * MINUTES_TO_PIXELS >=
-        this.maxPosY
-      ) {
-        newTask.duration = Math.floor(
-          (this.maxPosY - event.pageY) / MINUTES_TO_PIXELS
-        );
-        newTask.start = Math.round(
-          (this.maxPosY - HEADER_HEIGHT) / MINUTES_TO_PIXELS - newTask.duration
-        );
-      } else {
-        newTask.start = Math.round(
-          (event.pageY - HEADER_HEIGHT) / MINUTES_TO_PIXELS
-        );
-        newTask.duration = DEFAULT_DURATION;
-      }
-
-      newTask.title = DEFAULT_TITLE;
-      newTask.id = "new";
-      this.plan = this.plan
-        .concat([newTask])
+    if (!data && event) this.newTaskHandler(event);
+    if (!data && !event) {
+      this.plan = tasks
+        .get()
         .sort((a, b) => a.start - b.start)
         .reduce(this.reducer.bind(this), []);
 
       this.clearProducts();
       this.render();
     }
+  }
+
+  newTaskHandler(event) {
+    const newTask = {};
+
+    if (event.pageY >= this.maxPosY) {
+      newTask.start = Math.round(
+        (this.maxPosY - HEADER_HEIGHT) / MINUTES_TO_PIXELS - DEFAULT_DURATION
+      );
+      newTask.duration = DEFAULT_DURATION;
+    } else if (
+      event.pageY + DEFAULT_DURATION * MINUTES_TO_PIXELS >=
+      this.maxPosY
+    ) {
+      newTask.duration = Math.floor(
+        (this.maxPosY - event.pageY) / MINUTES_TO_PIXELS
+      );
+      newTask.start = Math.round(
+        (this.maxPosY - HEADER_HEIGHT) / MINUTES_TO_PIXELS - newTask.duration
+      );
+    } else {
+      newTask.start = Math.round(
+        (event.pageY - HEADER_HEIGHT) / MINUTES_TO_PIXELS
+      );
+      newTask.duration = DEFAULT_DURATION;
+    }
+
+    newTask.title = DEFAULT_TITLE;
+    newTask.id = "new";
+    this.plan = this.plan
+      .concat([newTask])
+      .sort((a, b) => a.start - b.start)
+      .reduce(this.reducer.bind(this), []);
+
+    this.clearProducts();
+    this.render();
   }
 
   cancel(data) {
