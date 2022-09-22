@@ -1,10 +1,13 @@
 import { MINUTES_TO_PIXELS } from "../constants/constants.js";
 
 export const task = (task) => {
-  const { start, duration, minTitle, bg, left, width, border, id } = task;
+  const { start, duration, minTitle, bg, left, width, border, id, title } =
+    task;
 
   return `
     <div class="task"
+      data-task="${title}"
+      data-type="task"
       ${id ? `id="${id}"` : ""}
       style="
         width: ${width ? width : "100%"}; 

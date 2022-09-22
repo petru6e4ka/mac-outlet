@@ -16,7 +16,7 @@ export class TaskForm {
 
   setState(evt) {
     this[evt.target.name] = evt.target.value;
-    console.log(evt.target.name, evt.target.value);
+    //console.log(evt.target.name, evt.target.value);
 
     if (this.validityCheck()) return;
     // TODO: event for rerender day
@@ -137,10 +137,15 @@ export class TaskForm {
       1000 /
       HOUR;
 
-    const all = tasks.get().concat([newTask]);
+    const actionType = this.submitElem.getAttribute("data-action");
 
-    tasks.set(all);
-    this.events.emit(TASK.SAVED);
+    if (actionType === "create") {
+      this.events.emit(TASK.SAVED, { data: newTask, type: "create" });
+    }
+
+    if (actionType === "update") {
+      this.events.emit(TASK.UPDATED, { data: newTask, type: "update" });
+    }
 
     evt.target.reset();
   }

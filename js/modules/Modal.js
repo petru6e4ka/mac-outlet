@@ -24,7 +24,7 @@ class Modal {
   }
 
   openModal(...args) {
-    const [child, data, onChange, onSave, onClose, event] = args;
+    const [child, onChange, onSave, onClose, data, event] = args;
     const content = child(data, event);
     const portal = document.querySelector("#portal");
     const modal = document.querySelector("#portal-content");
@@ -32,7 +32,7 @@ class Modal {
     this.data = data;
     this.closer = onClose;
     modal.innerHTML = content;
-    this.events.emit(TASK.OPENED, { data, event });
+    this.events.emit(TASK.OPEN, { data, event });
 
     onChange();
     onSave();

@@ -4,6 +4,7 @@ export const DEFAULT_DURATION = 30;
 export const DEFAULT_TITLE = "New Task";
 export const MIN_TASK_WIDTH = 200;
 export const HEADER_HEIGHT = 60;
+export const DEFAULT_COLOR = "#E2ECF5";
 
 export const DAY_LIMIT = {
   START: 8,
@@ -13,7 +14,9 @@ export const DAY_LIMIT = {
 };
 
 export const TASK = {
-  OPENED: "OPENED",
+  OPEN: "OPEN",
   CANCEL: "CANCEL",
   SAVED: "SAVED",
+  CHANGE: "CHANGE",
+  UPDATED: "UPDATED",
 };

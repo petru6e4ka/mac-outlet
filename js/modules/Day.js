@@ -8,8 +8,11 @@ import {
   DAY_LIMIT,
   DEFAULT_DURATION,
   DEFAULT_TITLE,
+  TASK,
+  DEFAULT_COLOR,
 } from "../constants/constants.js";
 import { color } from "../utils/color.js";
+import EventEmitter from "../events/EventEmitter.js";
 
 class Day {
   constructor(plan) {
@@ -28,14 +31,16 @@ class Day {
       tasks.set(this.data);
     }
 
-    this.defaultBgColor = "#E2ECF5";
-    // this.defaultBorderColor = "#6E9ECF";
+    this.defaultBgColor = DEFAULT_COLOR;
     this.plan = this.data
       .sort((a, b) => a.start - b.start)
       .reduce(this.reducer.bind(this), []);
     this.parent = document.querySelector("#tasks");
+    this.events = new EventEmitter();
+    this.taskEditListeners = this.taskEditHandlers.bind(this);
 
     this.render();
+    this.onClick();
   }
 
   reducer(previousValue, currentValue) {
@@ -50,23 +55,21 @@ class Day {
       width: "100%",
     };
 
-    const prevElement =
-      previousValue && previousValue[previousValue.length - 1];
-
-    if (
-      prevElement &&
-      currentValue.start > prevElement.start &&
-      currentValue.start < prevElement.start + prevElement.duration
-    ) {
-      _task.left = prevElement.left + MIN_TASK_WIDTH;
-      _task.width = `calc(100% - ${prevElement.left + MIN_TASK_WIDTH}px)`;
-      prevElement.width = `${MIN_TASK_WIDTH}px`;
-      prevElement.minTitle = `${
-        prevElement.title.length > 25
-          ? prevElement.minTitle.slice(0, 25) + "..."
-          : prevElement.minTitle
-      }`;
-    }
+    previousValue.forEach((elem) => {
+      if (
+        currentValue.start > elem.start &&
+        currentValue.start < elem.start + elem.duration
+      ) {
+        _task.left = elem.left + MIN_TASK_WIDTH;
+        _task.width = `calc(100% - ${elem.left + MIN_TASK_WIDTH}px)`;
+        elem.width = `${MIN_TASK_WIDTH}px`;
+        elem.minTitle = `${
+          elem.title.length > 25
+            ? elem.minTitle.slice(0, 25) + "..."
+            : elem.minTitle
+        }`;
+      }
+    });
 
     return previousValue.concat([_task]);
   }
@@ -77,16 +80,43 @@ class Day {
     return (this.parent.innerHTML = tasks);
   }
 
-  update({ data, event }) {
-    if (!data && event) this.newTaskHandler(event);
-    if (!data && !event) {
+  update({ data, event, type }) {
+    console.log(arguments);
+
+    if (!data) this.newTaskHandler(event);
+    if (data && type === "create") {
+      const all = tasks.get().concat([data]);
+
+      tasks.set(all);
       this.plan = tasks
         .get()
         .sort((a, b) => a.start - b.start)
         .reduce(this.reducer.bind(this), []);
 
-      this.clearProducts();
+      this.clearTasks();
       this.render();
+      this.onClick();
+    }
+
+    if (data && type === "update") {
+      const currentElemTitle = document
+        .querySelector("#edit")
+        .getAttribute("data-task");
+
+      const all = tasks
+        .get()
+        .filter((elem) => elem.title !== currentElemTitle)
+        .concat([data]);
+
+      tasks.set(all);
+      this.plan = tasks
+        .get()
+        .sort((a, b) => a.start - b.start)
+        .reduce(this.reducer.bind(this), []);
+
+      this.clearTasks();
+      this.render();
+      this.onClick();
     }
   }
 
@@ -122,8 +152,9 @@ class Day {
       .sort((a, b) => a.start - b.start)
       .reduce(this.reducer.bind(this), []);
 
-    this.clearProducts();
+    this.clearTasks();
     this.render();
+    this.onClick();
   }
 
   cancel(data) {
@@ -133,17 +164,47 @@ class Day {
         .sort((a, b) => a.start - b.start)
         .reduce(this.reducer.bind(this), []);
 
-      this.clearProducts();
+      this.clearTasks();
       this.render();
+      this.onClick();
+    }
+
+    if (data) {
+      const editingElem = this.parent.querySelector("#edit");
+
+      editingElem?.removeAttribute("id");
     }
   }
 
-  clearProducts() {
+  clearTasks() {
+    this.parent
+      .querySelectorAll('[data-type="task"]')
+      .forEach((elem) =>
+        elem.removeEventListener("click", this.taskEditListeners)
+      );
+
     if (this.parent) {
       while (this.parent.lastChild) {
         this.parent.removeChild(this.parent.lastChild);
       }
     }
+  }
+
+  taskEditHandlers(event) {
+    const data = this.plan.find(
+      (elem) => elem.title === event.target.getAttribute("data-task")
+    );
+    event.target.setAttribute("id", "edit");
+
+    this.events.emit(TASK.CHANGE, data, event);
+  }
+
+  onClick() {
+    this.parent
+      .querySelectorAll('[data-type="task"]')
+      .forEach((elem) =>
+        elem.addEventListener("click", this.taskEditListeners)
+      );
   }
 }
 

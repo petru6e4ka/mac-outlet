@@ -103,6 +103,8 @@ ul {
   position: absolute;
   min-width: 200px;
   padding: 5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .modal__overlay {
@@ -244,4 +246,8 @@ ul {
   background-color: rgba(120, 120, 120, 0.09);
   color: #555;
   cursor: auto;
+}
+
+.form-actions {
+  display: flex;
 }

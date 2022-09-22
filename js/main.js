@@ -12,17 +12,32 @@ class App {
     this.taskForm = new TaskForm();
     this.onAdd();
 
-    this.modal.events.subscribe(TASK.OPENED, this.day.update.bind(this.day));
+    this.modal.events.subscribe(TASK.OPEN, this.day.update.bind(this.day));
     this.modal.events.subscribe(TASK.CANCEL, this.day.cancel.bind(this.day));
 
+    this.taskForm.events.subscribe(TASK.SAVED, this.day.update.bind(this.day));
     this.taskForm.events.subscribe(
-      TASK.SAVED,
-      this.day.update.bind(this.day, {})
+      TASK.UPDATED,
+      this.day.update.bind(this.day)
     );
-
     this.taskForm.events.subscribe(
       TASK.SAVED,
       this.modal.onClose.bind(this.modal)
+    );
+    this.taskForm.events.subscribe(
+      TASK.UPDATED,
+      this.modal.onClose.bind(this.modal)
+    );
+
+    this.day.events.subscribe(
+      TASK.CHANGE,
+      this.modal.openModal.bind(
+        this.modal,
+        taskForm,
+        this.taskForm.onChange.bind(this.taskForm),
+        this.taskForm.onSubmit.bind(this.taskForm),
+        this.taskForm.onClose.bind(this.taskForm)
+      )
     );
   }
 
@@ -35,10 +50,10 @@ class App {
         this.modal.openModal.bind(
           this.modal,
           taskForm,
-          null,
           this.taskForm.onChange.bind(this.taskForm),
           this.taskForm.onSubmit.bind(this.taskForm),
-          this.taskForm.onClose.bind(this.taskForm)
+          this.taskForm.onClose.bind(this.taskForm),
+          null
         )
       );
     }
