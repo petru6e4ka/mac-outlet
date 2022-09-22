@@ -1,6 +1,5 @@
-import { DAY_LIMIT, HOUR, TASK } from "../constants/constants.js";
+import { DAY_LIMIT, HOUR, TASK, ACTIONS } from "../constants/constants.js";
 import { timeConverter } from "../utils/time.js";
-import { tasks } from "../services/storage.js";
 import EventEmitter from "../events/EventEmitter.js";
 
 export class TaskForm {
@@ -12,14 +11,14 @@ export class TaskForm {
     this.events = new EventEmitter();
     this.stateSetter = this.setState.bind(this);
     this.submitSetter = this.submitHandler.bind(this);
+    this.deleteSetter = this.deleteHandler.bind(this);
   }
 
   setState(evt) {
     this[evt.target.name] = evt.target.value;
-    //console.log(evt.target.name, evt.target.value);
 
-    if (this.validityCheck()) return;
-    // TODO: event for rerender day
+    //if (this.validityCheck()) return;
+    // TODO: event for rerender day dynamically
   }
 
   onChange() {
@@ -86,15 +85,11 @@ export class TaskForm {
   }
 
   onAction() {
-    // this.deleteElem = document.querySelector("#delete");
+    this.deleteElem = document.querySelector("#delete");
     this.submitElem = document.querySelector("#submit");
-    // if(this.deleteElem && this.updateElem) {
-    //   this.deleteElem.addEventListener('click', )
-    //   this.updateElem.addEventListener('click', )
-    // }
-    // if(this.addElem) {
-    //   this.addElem.addEventListener('click', )
-    // }
+    if (this.deleteElem) {
+      this.deleteElem.addEventListener("click", this.deleteSetter);
+    }
   }
 
   onClose() {
@@ -104,14 +99,9 @@ export class TaskForm {
     this.colorElem.removeEventListener("change", this.stateSetter);
     document.forms.taskForm.removeEventListener("submit", this.submitSetter);
 
-    // if(this.deleteElem && this.updateElem) {
-    //   this.deleteElem.removeEventListener('click', )
-    //   this.updateElem.removeEventListener('click', )
-    // }
-
-    // if(this.addElem) {
-    //   this.addElem.removeEventListener('click', )
-    // }
+    if (this.deleteElem) {
+      this.deleteElem.removeEventListener("click", this.deleteSetter);
+    }
   }
 
   submitHandler(evt) {
@@ -139,15 +129,19 @@ export class TaskForm {
 
     const actionType = this.submitElem.getAttribute("data-action");
 
-    if (actionType === "create") {
-      this.events.emit(TASK.SAVED, { data: newTask, type: "create" });
+    if (actionType === ACTIONS.CREATE) {
+      this.events.emit(TASK.SAVED, { data: newTask, type: ACTIONS.CREATE });
     }
 
-    if (actionType === "update") {
-      this.events.emit(TASK.UPDATED, { data: newTask, type: "update" });
+    if (actionType === ACTIONS.UPDATE) {
+      this.events.emit(TASK.UPDATED, { data: newTask, type: ACTIONS.UPDATE });
     }
 
     evt.target.reset();
+  }
+
+  deleteHandler() {
+    this.events.emit(TASK.DELETED, { type: ACTIONS.DELETE });
   }
 
   onSubmit() {

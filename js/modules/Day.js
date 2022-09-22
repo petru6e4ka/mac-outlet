@@ -10,6 +10,7 @@ import {
   DEFAULT_TITLE,
   TASK,
   DEFAULT_COLOR,
+  ACTIONS,
 } from "../constants/constants.js";
 import { color } from "../utils/color.js";
 import EventEmitter from "../events/EventEmitter.js";
@@ -81,43 +82,23 @@ class Day {
   }
 
   update({ data, event, type }) {
-    console.log(arguments);
-
-    if (!data) this.newTaskHandler(event);
-    if (data && type === "create") {
-      const all = tasks.get().concat([data]);
-
-      tasks.set(all);
-      this.plan = tasks
-        .get()
-        .sort((a, b) => a.start - b.start)
-        .reduce(this.reducer.bind(this), []);
-
-      this.clearTasks();
-      this.render();
-      this.onClick();
+    if (!data && type !== ACTIONS.DELETE) {
+      this.newTaskHandler(event);
+      return;
     }
 
-    if (data && type === "update") {
-      const currentElemTitle = document
-        .querySelector("#edit")
-        .getAttribute("data-task");
+    if (!data && type === ACTIONS.DELETE) this.deleteTaskHandler(event);
+    if (data && type === ACTIONS.CREATE) this.createTaskHandler(data);
+    if (data && type === ACTIONS.UPDATE) this.updateTaskHandler(data);
 
-      const all = tasks
-        .get()
-        .filter((elem) => elem.title !== currentElemTitle)
-        .concat([data]);
+    this.plan = tasks
+      .get()
+      .sort((a, b) => a.start - b.start)
+      .reduce(this.reducer.bind(this), []);
 
-      tasks.set(all);
-      this.plan = tasks
-        .get()
-        .sort((a, b) => a.start - b.start)
-        .reduce(this.reducer.bind(this), []);
-
-      this.clearTasks();
-      this.render();
-      this.onClick();
-    }
+    this.clearTasks();
+    this.render();
+    this.onClick();
   }
 
   newTaskHandler(event) {
@@ -157,6 +138,31 @@ class Day {
     this.onClick();
   }
 
+  deleteTaskHandler() {
+    const currentElemTitle = this.editing;
+
+    const all = tasks.get().filter((elem) => elem.title !== currentElemTitle);
+
+    tasks.set(all);
+  }
+
+  createTaskHandler(data) {
+    const all = tasks.get().concat([data]);
+
+    tasks.set(all);
+  }
+
+  updateTaskHandler(data) {
+    const currentElemTitle = this.editing;
+
+    const all = tasks
+      .get()
+      .filter((elem) => elem.title !== currentElemTitle)
+      .concat([data]);
+
+    tasks.set(all);
+  }
+
   cancel(data) {
     if (!data) {
       this.plan = this.plan
@@ -194,8 +200,7 @@ class Day {
     const data = this.plan.find(
       (elem) => elem.title === event.target.getAttribute("data-task")
     );
-    event.target.setAttribute("id", "edit");
-
+    this.editing = event.target.getAttribute("data-task");
     this.events.emit(TASK.CHANGE, data, event);
   }
 

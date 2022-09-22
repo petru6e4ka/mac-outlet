@@ -28,6 +28,14 @@ class App {
       TASK.UPDATED,
       this.modal.onClose.bind(this.modal)
     );
+    this.taskForm.events.subscribe(
+      TASK.DELETED,
+      this.day.update.bind(this.day)
+    );
+    this.taskForm.events.subscribe(
+      TASK.DELETED,
+      this.modal.onClose.bind(this.modal)
+    );
 
     this.day.events.subscribe(
       TASK.CHANGE,

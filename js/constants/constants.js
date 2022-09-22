@@ -6,6 +6,9 @@ export const MIN_TASK_WIDTH = 200;
 export const HEADER_HEIGHT = 60;
 export const DEFAULT_COLOR = "#E2ECF5";
 
+// TODO: defaults settings into object
+// TODO: time constants hour/miliseconds into object
+
 export const DAY_LIMIT = {
   START: 8,
   END: 17,
@@ -19,4 +22,11 @@ export const TASK = {
   SAVED: "SAVED",
   CHANGE: "CHANGE",
   UPDATED: "UPDATED",
+  DELETED: "DELETED",
+};
+
+export const ACTIONS = {
+  CREATE: "CREATE",
+  UPDATE: "UPDATE",
+  DELETE: "DELETE",
 };

@@ -2,18 +2,19 @@ import {
   HEADER_HEIGHT,
   MINUTES_TO_PIXELS,
   DEFAULT_COLOR,
+  ACTIONS,
 } from "../constants/constants.js";
 import { timeConverter } from "../utils/time.js";
 
 const emptyTask = {
-  title: "", // string
-  start: 0, // number
-  duration: 0, // number
-  minTitle: "", // string
-  bg: "", // string
-  left: 0, // number
-  width: "", // string
-  border: "", // string color
+  title: "",
+  start: 0,
+  duration: 0,
+  minTitle: "",
+  bg: "",
+  left: 0,
+  width: "",
+  border: "",
 };
 
 export const taskForm = (task, evt) => {
@@ -47,10 +48,10 @@ export const taskForm = (task, evt) => {
   const actions = task
     ? `
     <div class="form-actions">
-      <button type="button" class="form-btn" id="delete">Delete</button>
-      <button type="submit" data-action="update" class="form-btn" id="submit">Update</button>
+      <button type="button" data-action="${ACTIONS.DELETE}" class="form-btn" id="delete">Delete</button>
+      <button type="submit" data-action="${ACTIONS.UPDATE}" class="form-btn" id="submit">Update</button>
     </div>`
-    : '<button type="submit" data-action="create" class="form-btn" id="submit">Add</button>';
+    : `<button type="submit" data-action="${ACTIONS.CREATE}" class="form-btn" id="submit">Add</button>`;
 
   return `
     <form class="form" name="taskForm">
