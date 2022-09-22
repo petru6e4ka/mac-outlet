@@ -58,8 +58,8 @@ class Day {
 
     previousValue.forEach((elem) => {
       if (
-        currentValue.start > elem.start &&
-        currentValue.start < elem.start + elem.duration
+        currentValue.start >= elem.start &&
+        currentValue.start <= elem.start + elem.duration
       ) {
         _task.left = elem.left + MIN_TASK_WIDTH;
         _task.width = `calc(100% - ${elem.left + MIN_TASK_WIDTH}px)`;
