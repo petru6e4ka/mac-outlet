@@ -1,4 +1,4 @@
-import { MINUTES_TO_PIXELS } from "../constants/constants.js";
+import { MINUTES } from "../constants/constants.js";
 
 export const task = (task) => {
   const { start, duration, minTitle, bg, left, width, border, id, title } =
@@ -11,9 +11,9 @@ export const task = (task) => {
       ${id ? `id="${id}"` : ""}
       style="
         width: ${width ? width : "100%"}; 
-        top: ${start * MINUTES_TO_PIXELS}px; 
+        top: ${start * MINUTES.TO_PX}px; 
         ${left ? `left: ${left}px;` : ""} 
-        height: ${duration * MINUTES_TO_PIXELS}px;
+        height: ${duration * MINUTES.TO_PX}px;
         background: ${bg};
         border-left: 2px solid ${border};
       ">

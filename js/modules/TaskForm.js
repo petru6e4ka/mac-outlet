@@ -1,4 +1,4 @@
-import { DAY_LIMIT, HOUR, TASK, ACTIONS } from "../constants/constants.js";
+import { DAY_LIMIT, MINUTES, TASK, ACTIONS } from "../constants/constants.js";
 import { timeConverter } from "../utils/time.js";
 import EventEmitter from "../events/EventEmitter.js";
 
@@ -118,14 +118,14 @@ export class TaskForm {
     newTask.start =
       (timeConverter.getSecondsFromTimeStr(this.start) -
         timeConverter.getSecondsFromTimeStr(DAY_LIMIT.START_FORMATED)) /
-      1000 /
-      HOUR;
+      MINUTES.MILISECONDS /
+      MINUTES.IN_HOUR;
 
     newTask.duration =
       (timeConverter.getSecondsFromTimeStr(this.end) -
         timeConverter.getSecondsFromTimeStr(this.start)) /
-      1000 /
-      HOUR;
+      MINUTES.MILISECONDS /
+      MINUTES.IN_HOUR;
 
     const actionType = this.submitElem.getAttribute("data-action");
 

@@ -1,9 +1,8 @@
 import {
   HEADER_HEIGHT,
-  MINUTES_TO_PIXELS,
+  MINUTES,
   DAY_LIMIT,
-  HOUR,
-  DEFAULT_DURATION,
+  DEFAULTS,
 } from "../constants/constants.js";
 
 const timeFormater = (hh, mm) => {
@@ -27,29 +26,30 @@ const posYToTimeFormated = (y) => {
     },
   };
 
-  const minutesFromStart = (y - HEADER_HEIGHT) / MINUTES_TO_PIXELS;
-  const endOfTask = minutesFromStart + DEFAULT_DURATION;
+  const minutesFromStart = (y - HEADER_HEIGHT) / MINUTES.TO_PX;
+  const endOfTask = minutesFromStart + DEFAULTS.DURATION;
 
   taskLimits.start.hours =
-    DAY_LIMIT.START + Math.floor(minutesFromStart / HOUR);
-  taskLimits.start.minutes = Math.round(minutesFromStart % HOUR);
+    DAY_LIMIT.START + Math.floor(minutesFromStart / MINUTES.IN_HOUR);
+  taskLimits.start.minutes = Math.round(minutesFromStart % MINUTES.IN_HOUR);
 
-  taskLimits.end.hours = DAY_LIMIT.START + Math.floor(endOfTask / HOUR);
-  taskLimits.end.minutes = Math.round(endOfTask % HOUR);
+  taskLimits.end.hours =
+    DAY_LIMIT.START + Math.floor(endOfTask / MINUTES.IN_HOUR);
+  taskLimits.end.minutes = Math.round(endOfTask % MINUTES.IN_HOUR);
 
-  if (taskLimits.start.minutes === HOUR) {
+  if (taskLimits.start.minutes === MINUTES.IN_HOUR) {
     taskLimits.start.minutes = 0;
     taskLimits.start.hours += 1;
   }
 
-  if (taskLimits.end.minutes === HOUR) {
+  if (taskLimits.end.minutes === MINUTES.IN_HOUR) {
     taskLimits.end.minutes = 0;
     taskLimits.end.hours += 1;
   }
 
   if (taskLimits.start.hours === DAY_LIMIT.END) {
     return [
-      timeFormater(DAY_LIMIT.END - 1, DEFAULT_DURATION),
+      timeFormater(DAY_LIMIT.END - 1, DEFAULTS.DURATION),
       timeFormater(DAY_LIMIT.END, 0),
     ];
   }

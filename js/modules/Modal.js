@@ -6,6 +6,7 @@ class Modal {
   constructor() {
     this.parent = document.querySelector("#portal");
     this.events = new EventEmitter();
+
     this.renderModal();
     this.onOverlayClick();
     this.onModalContentClick();
@@ -42,7 +43,9 @@ class Modal {
 
   onClose() {
     this.closer();
+
     const modal = document.querySelector("#portal-content");
+
     this.parent.classList.add("hidden");
     this.clearModal(modal);
     this.events.emit(TASK.CANCEL, this.data);

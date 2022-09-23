@@ -1,7 +1,7 @@
 import {
   HEADER_HEIGHT,
-  MINUTES_TO_PIXELS,
-  DEFAULT_COLOR,
+  MINUTES,
+  DEFAULTS,
   ACTIONS,
 } from "../constants/constants.js";
 import { timeConverter } from "../utils/time.js";
@@ -32,12 +32,10 @@ export const taskForm = (task, evt) => {
 
   if (task) {
     const [start] = timeConverter.posYToTimeFormated(
-      task.start * MINUTES_TO_PIXELS + HEADER_HEIGHT
+      task.start * MINUTES.TO_PX + HEADER_HEIGHT
     );
     const [end] = timeConverter.posYToTimeFormated(
-      task.start * MINUTES_TO_PIXELS +
-        HEADER_HEIGHT +
-        task.duration * MINUTES_TO_PIXELS
+      task.start * MINUTES.TO_PX + HEADER_HEIGHT + task.duration * MINUTES.TO_PX
     );
     taskLimits.start = start;
     taskLimits.end = end;
@@ -81,7 +79,7 @@ export const taskForm = (task, evt) => {
       <div class="form-picker">
         <label for="color" class="picker-label">Your task color</label>
         <input type="color" id="color" name="color" value="${
-          task ? task.bg : DEFAULT_COLOR
+          task ? task.bg : DEFAULTS.COLOR
         }" class="picker-input">
       </div>
 

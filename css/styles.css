@@ -17,10 +17,15 @@ html {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   margin: 0 10px 15px;
   font-weight: 400;
   line-height: 1.2;
+}
+
+h3 {
+  margin: 0;
 }
 
 ol,
@@ -122,6 +127,7 @@ ul {
   background: rgba(0, 0, 0, 0.75);
   transition: opacity 0.5s ease, visibility 0.5s ease;
   opacity: 1;
+  z-index: 200;
 }
 
 .modal {
@@ -136,6 +142,7 @@ ul {
   transform: translateY(0);
   transition: transform 0.5s ease;
   transition-delay: 0.2s;
+  z-index: 300;
 }
 
 .hidden .modal__overlay {
@@ -250,4 +257,52 @@ ul {
 
 .form-actions {
   display: flex;
+}
+
+.notifs-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 250px;
+  padding: 10px;
+  z-index: 100;
+}
+
+.notif {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: fit-content;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid rgb(25, 118, 210);
+  background-color: rgba(226, 236, 245, 0.6);
+  opacity: 0;
+  transition: opacity 250ms;
+}
+
+.notif.active {
+  opacity: 1;
+}
+
+.notif-close {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  margin-left: 40px;
+  line-height: 25px;
+  font-size: 25px;
+  color: rgb(25, 118, 210);
+  font-weight: 400;
+  background: transparent;
+  border: 1px solid rgb(25, 118, 210);
+  cursor: pointer;
+  transform: rotate(45deg);
+  outline: none;
 }
