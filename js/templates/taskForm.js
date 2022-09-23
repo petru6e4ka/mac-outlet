@@ -58,7 +58,7 @@ export const taskForm = (task, evt) => {
       <div class="form-field">
         <input type="text" name="title" required id="title" placeholder="Your awesome task title" title="" class="form-input" value="${
           _task.title
-        }"/>
+        }" pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"/>
         <label for="title" class="form-label">Title</label>
       </div>
 
