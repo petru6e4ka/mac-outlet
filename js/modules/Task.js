@@ -22,7 +22,6 @@ export class Task {
     this.timingCheck = this.timingCheckHandler.bind(this);
     this.onStart = onStart;
     this.timerId = null;
-    //this.timer();
 
     if (
       this.now >= this.task.start &&

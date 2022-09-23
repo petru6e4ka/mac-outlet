@@ -16,9 +16,6 @@ export class TaskForm {
 
   setState(evt) {
     this[evt.target.name] = evt.target.value;
-
-    //if (this.validityCheck()) return;
-    // TODO: event for rerender day dynamically
   }
 
   onChange() {
@@ -43,23 +40,25 @@ export class TaskForm {
   }
 
   validityCheck() {
+    this.errors = [];
+
     if (!this.title.trim()) {
-      //console.log("empty title");
+      this.errors.push("empty title");
       return;
     }
 
     if (!this.color) {
-      //console.log("empty color");
+      this.errors.push("empty color");
       return;
     }
 
     if (!this.start) {
-      //console.log("empty start");
+      this.errors.push("empty start");
       return;
     }
 
     if (!this.end) {
-      //console.log("empty end");
+      this.errors.push("empty end");
       return;
     }
 
@@ -72,12 +71,12 @@ export class TaskForm {
       !startDate ||
       !endDate
     ) {
-      //console.log("invalid date format");
+      this.errors.push("invalid date format");
       return;
     }
 
     if (Number(startDate) >= Number(endDate)) {
-      //console.log("invalid time gap");
+      this.errors.push("invalid time gap");
       return;
     }
 
