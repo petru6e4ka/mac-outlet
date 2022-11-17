@@ -1,5 +1,5 @@
 {
-  "type": "module",
+  "type": "commonjs",
   "name": "nix_education_vorobiova_anastasiia",
   "version": "1.0.0",
   "description": "",
