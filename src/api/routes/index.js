@@ -6,6 +6,8 @@ const routes = (req, res) => {
   const userPattern = /(^\/user$|^\/user\/)/;
   const base = "/";
 
+  res.setHeader("Access-Control-Allow-Origin", "*");
+
   if (url === base) {
     getDevices(req, res);
     return;
