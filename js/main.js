@@ -7,13 +7,18 @@ import { Cart } from "./modules/Cart.js";
 import { productInfo } from "./htmlTemplates/productInfo.js";
 import { PRODUCT, FILTERS } from "./helpers/eventNames.js";
 import { filtering } from "./data/storage.js";
+import service from "./db.js";
 
 class App {
-  constructor(data) {
+  constructor() {
+    service.getProducts(this.initialize.bind(this));
+  }
+
+  async initialize(products) {
     this.filtering = filtering.get();
     this.cart = new Cart();
-    this.products = new Products(data, this.filtering);
-    this.filters = new Filters(data, this.filtering);
+    this.products = new Products(products, this.filtering);
+    this.filters = new Filters(products, this.filtering);
     this.controls = new Controls();
     this.modal = new Modal();
 
@@ -51,4 +56,4 @@ class App {
   }
 }
 
-new App(items);
+new App();

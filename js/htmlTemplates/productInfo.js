@@ -1,9 +1,34 @@
 import { randomNumber } from "../helpers/utils.js";
 
 export const productInfo = (elem) => {
-  const { imgUrl, color, os, chip, size, name, orderInfo, price, id } = elem;
+  const {
+    imgUrl,
+    color_0,
+    color_1,
+    color_2,
+    color_3,
+    color_4,
+    color_5,
+    os,
+    chip_name,
+    size_depth,
+    size_height,
+    size_weight,
+    size_width,
+    name,
+    orderInfo_inStock,
+    orderInfo_reviews,
+    price,
+    id,
+  } = elem;
+  const color = [color_0, color_1, color_2, color_3, color_4, color_5].filter(
+    (elem) => !!elem.trim()
+  );
 
-  const addBtn = orderInfo.inStock
+  const inStock = Number(orderInfo_inStock);
+  const inReview = Number(orderInfo_reviews);
+
+  const addBtn = inStock
     ? `<button class="button" name="add" data-add-btn="${id}">Add to cart</button>`
     : `<button class="button" name="add" data-add-btn="${id}" disabled>Add to cart</button>`;
 
@@ -21,31 +46,32 @@ export const productInfo = (elem) => {
     </p>`
     : "";
 
-  const chipBlock = chip
+  const chipBlock = chip_name
     ? `<p>
       Chip: 
-      <span class="black">${chip.name}</span>
+      <span class="black">${chip_name}</span>
     </p>`
     : "";
 
-  const sizeBlock = size
-    ? `<p>
+  const sizeBlock =
+    size_depth && size_height && size_weight && size_width
+      ? `<p>
       Height: 
-      <span class="black">${size.height} cm</span>
+      <span class="black">${size_height} cm</span>
     </p>
     <p>
       Width: 
-      <span class="black">${size.width} cm</span>
+      <span class="black">${size_width} cm</span>
     </p>
     <p>
       Depth: 
-      <span class="black">${size.depth} cm</span>
+      <span class="black">${size_depth} cm</span>
     </p>
     <p>
       Weight: 
-      <span class="black">${size.weight} g</span>
+      <span class="black">${size_weight} g</span>
     </p>`
-    : "";
+      : "";
 
   return `
 <section class="product__modal">
@@ -59,7 +85,7 @@ export const productInfo = (elem) => {
         <span class="icon icon--full-heart"></span>
         <p>
           <span class="product-card__footer-line">
-            <span class="bold">${orderInfo.reviews}%</span>
+            <span class="bold">${inReview}%</span>
             Positive reviews
           </span>
           <span class="product-card__footer-line">Above avarage</span>
@@ -79,7 +105,7 @@ export const productInfo = (elem) => {
   </div>
   <div class="product__actions">
     <div class="product__price">$ ${price}</div>
-    <p>Stock: <span class="bold">${orderInfo.inStock}</span> pcs.</p>
+    <p>Stock: <span class="bold">${inStock}</span> pcs.</p>
     ${addBtn}
   </div>
 </section>`;

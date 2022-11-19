@@ -17,7 +17,26 @@ export class Filters {
 
   fillFilters(list, filters) {
     list.forEach((elem) => {
-      const { color, os, storage, price } = elem;
+      const {
+        color_0,
+        color_1,
+        color_2,
+        color_3,
+        color_4,
+        color_5,
+        os,
+        storage,
+        price,
+      } = elem;
+      const _price = Number(price);
+      const color = [
+        color_0,
+        color_1,
+        color_2,
+        color_3,
+        color_4,
+        color_5,
+      ].filter((elem) => !!elem.trim());
 
       if (color) {
         color.forEach((elem) => {
@@ -28,21 +47,21 @@ export class Filters {
       }
 
       if (!filters.price.min) {
-        filters.price.min = price;
+        filters.price.min = _price;
       }
 
-      if (filters.price.min > price) {
-        filters.price.min = price;
-        this.min = price;
+      if (filters.price.min > _price) {
+        filters.price.min = _price;
+        this.min = _price;
       }
 
       if (!filters.price.max) {
-        filters.price.max = price;
+        filters.price.max = _price;
       }
 
-      if (filters.price.max < price) {
-        filters.price.max = price;
-        this.max = price;
+      if (filters.price.max < _price) {
+        filters.price.max = _price;
+        this.max = _price;
       }
 
       if (os && !(os in filters.os)) {

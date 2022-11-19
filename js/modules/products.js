@@ -45,7 +45,7 @@ export class Products {
     e.preventDefault();
 
     const product = this.products.find(
-      (elem) => elem.id === Number(e.currentTarget.dataset.productLink)
+      (elem) => elem.id === e.currentTarget.dataset.productLink
     );
 
     this.events.emit(PRODUCT.OPEN_INFO, product);
@@ -61,7 +61,7 @@ export class Products {
 
   addToCartCall(e) {
     const product = this.products.find(
-      (elem) => elem.id === Number(e.currentTarget.dataset.addBtn)
+      (elem) => elem.id === e.currentTarget.dataset.addBtn
     );
 
     this.events.emit(PRODUCT.ADD_TO_CART, product);
@@ -96,9 +96,18 @@ export class Products {
   }
 
   filterByColor(filterColor) {
-    this.filtered = this.filtered.filter((elem) =>
-      elem.color.some((colors) => colors in filterColor)
-    );
+    this.filtered = this.filtered.filter((elem) => {
+      const { color_0, color_1, color_2, color_3, color_4, color_5 } = elem;
+      const color = [
+        color_0,
+        color_1,
+        color_2,
+        color_3,
+        color_4,
+        color_5,
+      ].filter((elem) => !!elem.trim());
+      return color.some((colors) => colors in filterColor);
+    });
   }
 
   filterByOs(filterOs) {
@@ -120,14 +129,18 @@ export class Products {
 
     this.filtered = this.filtered.filter((elem) =>
       filters.some(
-        (filter) => filter.min <= elem.display && filter.max >= elem.display
+        (filter) =>
+          filter.min <= Number(elem.display) &&
+          filter.max >= Number(elem.display)
       )
     );
   }
 
   filterByPrice(filterPrice) {
     this.filtered = this.filtered.filter(
-      (elem) => elem.price >= filterPrice.min && elem.price <= filterPrice.max
+      (elem) =>
+        Number(elem.price) >= filterPrice.min &&
+        Number(elem.price) <= filterPrice.max
     );
   }
 

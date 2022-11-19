@@ -1,17 +1,20 @@
 import { randomNumber } from "../helpers/utils.js";
 
 export const productCard = (card) => {
-  const { name, imgUrl, id, price, orderInfo } = card;
+  const { name, imgUrl, id, price, orderInfo_inStock, orderInfo_reviews } =
+    card;
+  const inStock = Number(orderInfo_inStock);
+  const inReview = Number(orderInfo_reviews);
 
-  const reviews = orderInfo.inStock
+  const reviews = inStock
     ? `<span class="icon icon--positive"></span>
-      <span class="bold">${orderInfo.inStock}</span>
+      <span class="bold">${inStock}</span>
       left in stock`
     : `<span class="icon icon--negative"></span>
       <span class="bold">0</span>
       left in stock`;
 
-  const addBtn = orderInfo.inStock
+  const addBtn = inStock
     ? `<button class="button" name="add" data-add-btn="${id}">Add to cart</button>`
     : `<button class="button" name="add" data-add-btn="${id}" disabled>Add to cart</button>`;
 
@@ -43,7 +46,7 @@ export const productCard = (card) => {
         <span class="icon icon--full-heart"></span>
         <p>
           <span class="product-card__footer-line">
-            <span class="bold">${orderInfo.reviews}%</span>
+            <span class="bold">${inReview}%</span>
             Positive reviews
           </span>
           <span class="product-card__footer-line">Above avarage</span>

@@ -81,7 +81,7 @@ export class Cart {
     this.reduceBtn = this.parent.querySelector(
       `[data-item-reduce="${e.target.value}"]`
     );
-    this.item = this.items.find((elem) => elem.id === Number(e.target.value));
+    this.item = this.items.find((elem) => elem.id === e.target.value);
 
     if (isIncrease) this.onIncrease();
     if (!isIncrease) this.onReduce();
@@ -112,7 +112,7 @@ export class Cart {
     if (
       isInCart &&
       product.quantity < this.max &&
-      product.quantity < product.orderInfo.inStock
+      product.quantity < Number(product.orderInfo_inStock)
     ) {
       product.quantity += 1;
     }
@@ -146,7 +146,7 @@ export class Cart {
   onIncrease() {
     if (
       this.item.quantity < this.max &&
-      this.item.quantity < this.item.orderInfo.inStock
+      this.item.quantity < Number(this.item.orderInfo_inStock)
     ) {
       this.item.quantity += 1;
       this.countTotal();
@@ -163,7 +163,7 @@ export class Cart {
 
     if (
       this.item.quantity >= this.max ||
-      this.item.quantity >= this.item.orderInfo.inStock
+      this.item.quantity >= Number(this.item.orderInfo_inStock)
     ) {
       this.increaseBtn.disabled = true;
     }
@@ -188,7 +188,7 @@ export class Cart {
 
     if (
       this.item.quantity < this.max ||
-      this.item.quantity < this.item.orderInfo.inStock
+      this.item.quantity < Number(this.item.orderInfo_inStock)
     ) {
       this.increaseBtn.disabled = false;
     }
@@ -200,9 +200,7 @@ export class Cart {
     const block = this.parent.querySelector("#basket-portal");
     const badge = this.parent.querySelector("#basket-badge");
 
-    this.items = this.items.filter(
-      (elem) => elem.id !== Number(e.target.value)
-    );
+    this.items = this.items.filter((elem) => elem.id !== e.target.value);
 
     this.countTotal();
     block.innerHTML = basket(this.items, this.total);
