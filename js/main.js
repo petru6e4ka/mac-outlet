@@ -1,4 +1,3 @@
-import { items } from "./data/items.js";
 import { Products } from "./modules/products.js";
 import { Filters } from "./modules/filters.js";
 import { Controls } from "./modules/controls.js";
