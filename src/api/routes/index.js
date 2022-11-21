@@ -1,25 +1,27 @@
-const userRoutes = require("./user");
-const { getDevices } = require("../controllers/device");
+const {
+  getAllContacts,
+  addNewContact,
+  getOneContact,
+  changeOneContact,
+  deleteOneContact,
+} = require("../controllers");
+const {
+  keysValidation,
+  valuesValidation,
+  upadateFieldValidation,
+} = require("../middlewares");
 
-const routes = (req, res) => {
-  const { url } = req;
-  const userPattern = /(^\/user$|^\/user\/)/;
-  const base = "/";
+const routes = (app) => {
+  app
+    .route("/api/contacts")
+    .get(getAllContacts)
+    .post(keysValidation, valuesValidation, addNewContact);
 
-  res.setHeader("Access-Control-Allow-Origin", "*");
-
-  if (url === base) {
-    getDevices(req, res);
-    return;
-  }
-
-  if (userPattern.test(url)) {
-    userRoutes(req, res);
-    return;
-  }
-
-  res.statusCode = 404;
-  res.end();
+  app
+    .route("/api/contacts/:contactId")
+    .get(getOneContact)
+    .delete(deleteOneContact)
+    .put(upadateFieldValidation, changeOneContact);
 };
 
 module.exports = {
