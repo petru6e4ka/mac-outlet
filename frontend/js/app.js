@@ -21,8 +21,6 @@ class App {
   }
 
   auth(data) {
-    console.log("HEY");
-    console.log(data);
     if (data) {
       this.homeInit();
       return;

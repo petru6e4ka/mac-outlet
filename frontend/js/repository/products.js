@@ -12,7 +12,7 @@ class ProductsRepository {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+
         cb(data);
       }
 
