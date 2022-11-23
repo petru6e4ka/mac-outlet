@@ -32,6 +32,10 @@ class HomeController {
       FILTERS.OPEN,
       this.filters.openFilter.bind(this.filters)
     );
+    this.controls.events.subscribe(
+      FILTERS.SEARCH,
+      this.products.applySearch.bind(this.products)
+    );
 
     this.products.events.subscribe(
       PRODUCT.OPEN_INFO,

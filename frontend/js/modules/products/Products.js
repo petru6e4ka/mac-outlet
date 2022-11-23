@@ -67,11 +67,18 @@ export class Products {
     this.events.emit(PRODUCT.ADD_TO_CART, product);
   }
 
-  applyFilter(filters) {
-    if (JSON.stringify(filters) === JSON.stringify(this.filters)) return;
+  applyFilter(filters, term) {
+    if (
+      JSON.stringify(filters) === JSON.stringify(this.filters) &&
+      term === this.term
+    ) {
+      return;
+    }
+    const _filters = filters ? filters : {};
 
-    filtering.set(filters);
-    this.filters = { ...filters };
+    filtering.set(_filters);
+    this.filters = { ..._filters };
+    this.term = term;
 
     const {
       color: filterColor,
@@ -79,7 +86,7 @@ export class Products {
       os: filterOs,
       display: filterDisplay,
       price: filterPrice,
-    } = filters;
+    } = _filters;
 
     this.filtered = this.products.slice(0);
 
@@ -88,11 +95,20 @@ export class Products {
     if (memory) this.filterByMemory(memory);
     if (filterDisplay) this.filterByDisplay(filterDisplay);
     if (filterPrice) this.filterByPrice(filterPrice);
+    if (this.term) this.filterByTerm(this.term);
 
     this.clearProducts(this.parent);
     this.renderProducts(this.filtered);
     this.onClick();
     this.onBuy();
+  }
+
+  filterByTerm(term) {
+    this.filtered = this.filtered.filter((product) => {
+      if (product) {
+        return product.name.toLowerCase().includes(term.toLowerCase());
+      }
+    });
   }
 
   filterByColor(filterColor) {
@@ -152,5 +168,12 @@ export class Products {
     this.renderProducts(this.filtered);
     this.onClick();
     this.onBuy();
+  }
+
+  applySearch(data) {
+    const { term } = data;
+
+    this.filtered = this.products.slice(0);
+    this.applyFilter(this.filters, term);
   }
 }

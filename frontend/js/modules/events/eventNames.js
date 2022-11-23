@@ -8,6 +8,7 @@ export const FILTERS = {
   CLOSE: "CLOSE",
   APPLY: "APPLY",
   RESET: "RESET",
+  SEARCH: "SEARCH",
 };
 
 export const PAGE = {

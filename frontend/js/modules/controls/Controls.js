@@ -8,6 +8,7 @@ export class Controls {
     this.events = new EventEmitter();
     this.renderControls();
     this.onFilterClick();
+    this.onChange();
   }
 
   renderControls() {
@@ -33,5 +34,17 @@ export class Controls {
 
     filterBtn.classList.add("active");
     this.events.emit(FILTERS.OPEN);
+  }
+
+  onChange() {
+    const search = document.querySelector("#search");
+
+    if (search) {
+      search.addEventListener("change", this.onSearch.bind(this));
+    }
+  }
+
+  onSearch(e) {
+    this.events.emit(FILTERS.SEARCH, { term: e.target.value });
   }
 }
