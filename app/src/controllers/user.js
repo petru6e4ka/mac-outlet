@@ -1,13 +1,15 @@
-const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 const SECRET_JWT_CODE = "qwertyuiop";
+const SALT = "asdfghjklzxcvbnm";
 const maxAge = 1000 * 60 * 5;
 
 const createToken = (user) => {
-  return jwt.sign({ ...user }, SECRET_JWT_CODE, {
+  const { name, email } = user;
+
+  return jwt.sign({ name, email }, SECRET_JWT_CODE, {
     expiresIn: maxAge,
   });
 };
@@ -22,7 +24,7 @@ const createUser = async (req, res) => {
       return;
     }
 
-    const pwd = await bcrypt.hash(password, 10);
+    const pwd = await bcrypt.hash(password + SALT, 10);
 
     User.create({ name, email, password: pwd }, (err, user) => {
       if (err) {
@@ -51,7 +53,7 @@ const loginUser = async (req, res) => {
       return;
     }
 
-    if (!(await bcrypt.compare(password, user.password))) {
+    if (!(await bcrypt.compare(password + SALT, user.password))) {
       res.status(400).json({ message });
       return;
     }
