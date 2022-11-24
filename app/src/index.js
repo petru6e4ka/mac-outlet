@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const connectionDB = require("./mongo.js");
+const connectionDB = require("./database/mongo");
 const { routes } = require("./routes");
 
 const app = express();
@@ -12,9 +12,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-connectionDB();
 routes(app);
 
-app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+connectionDB()
+  .then(() => {
+    app.listen(port, hostname, () => {
+      console.log(`Server running at http://${hostname}:${port}/`);
+    });
+  })
+  .catch((err) => {
+    console.warn("ERROR: ", err);
+  });
