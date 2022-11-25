@@ -1,6 +1,12 @@
+import EventEmitter from "../modules/events/EventEmitter.js";
+import { AUTH } from "../modules/events/eventNames.js";
 import { token } from "../repository/storage.js";
 
 class ProductsRepository {
+  constructor() {
+    this.events = new EventEmitter();
+  }
+
   async getProducts(cb) {
     try {
       const response = await fetch("http://localhost:3000/api/devices", {
@@ -14,12 +20,10 @@ class ProductsRepository {
         const data = await response.json();
 
         cb(data);
+        return;
       }
 
-      if (response.status === 403) {
-        token.remove();
-        window.location.reload();
-      }
+      this.events.emit(AUTH.LOGOUT);
     } catch (err) {
       console.warn(err);
     }

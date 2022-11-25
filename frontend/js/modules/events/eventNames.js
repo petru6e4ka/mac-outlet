@@ -20,4 +20,5 @@ export const PAGE = {
 export const AUTH = {
   SIGNIN: "SIGNIN",
   SIGNUP: "SIGNUP",
+  LOGOUT: "LOGOUT",
 };

@@ -1,7 +1,7 @@
 import { token } from "../repository/storage.js";
 
 class AuthService {
-  async signin(cb, data) {
+  async signin(onSuccess, onError, data) {
     const response = await fetch("http://localhost:3000/api/signin", {
       method: "POST",
       headers: {
@@ -14,11 +14,16 @@ class AuthService {
       const auth = await response.json();
 
       token.set(auth.token);
-      window.location.reload();
+      onSuccess(auth.token);
+      return;
     }
+
+    const error = await response.json();
+
+    onError(error);
   }
 
-  async signup(cb, data) {
+  async signup(onSuccess, onError, data) {
     const response = await fetch("http://localhost:3000/api/signup", {
       method: "POST",
       headers: {
@@ -31,8 +36,13 @@ class AuthService {
       const auth = await response.json();
 
       token.set(auth.token);
-      window.location.reload();
+      onSuccess(auth.token);
+      return;
     }
+
+    const error = await response.json();
+
+    onError(error);
   }
 }
 
