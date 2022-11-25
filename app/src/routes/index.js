@@ -26,9 +26,6 @@ const routes = (app) => {
   app.route("/shop").get((_req, res) => {
     res.sendFile(index);
   });
-  app.route("*").get((_req, res) => {
-    res.redirect("https://mac-outlet-shop-app.herokuapp.com/");
-  });
 };
 
 module.exports = {
