@@ -6,7 +6,10 @@ const home = () => {
         <img src="./img/logo.svg" alt="Logo" class="logo__img" />
       </a>
     </div>
-    <div class="basket basket__block" id="basket"></div>
+    <div class="authorized__block">
+      <a href="#" class="link" id="logout">Logout</a>
+      <div class="basket basket__block" id="basket"></div>
+    </div>
   </div>
 </header>
 <main>

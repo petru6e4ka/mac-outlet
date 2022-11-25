@@ -12,11 +12,11 @@ import template from "./template.js";
 
 class HomeController {
   constructor() {
+    this.view = new View(template);
     repository.products.getProducts(this.initialize.bind(this));
   }
 
   async initialize(products) {
-    this.view = new View(template);
     this.filtering = filtering.get();
     this.cart = new Cart();
     this.products = new Products(products, this.filtering);
