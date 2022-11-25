@@ -852,12 +852,21 @@ ul {
   margin: 15px 0;
 }
 
-.form .link {
+.link {
   text-decoration: underline;
   text-align: center;
   color: #0e49b5;
 }
 
-.form .link:hover {
+.link:hover {
   text-decoration: none;
+}
+
+.form__error {
+  color: red;
+}
+
+.authorized__block {
+  display: flex;
+  align-items: center;
 }
