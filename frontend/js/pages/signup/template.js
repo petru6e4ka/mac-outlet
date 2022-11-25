@@ -41,7 +41,8 @@ export const signup = () => {
         required
       />
     </label>
-    <button type="submit" class="button" id="submit">Sign up</button>
+    <p id="error" class="form__error"></p>
+    <button type="submit" class="button" id="submit" disabled>Sign up</button>
     <a href="#" class="link" id="redirect">Login</a>
   </form>
 </main>

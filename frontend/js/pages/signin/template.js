@@ -31,7 +31,8 @@ const signin = () => {
         required
       />
     </label>
-    <button type="submit" class="button" id="submit">Login</button>
+    <p id="error" class="form__error"></p>
+    <button type="submit" class="button" id="submit" disabled>Login</button>
     <a href="#" class="link" id="redirect">Sign Up</a>
   </form>
 </main>
