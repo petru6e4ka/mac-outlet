@@ -4,7 +4,7 @@ const User = require("../models/user");
 
 const SECRET_JWT_CODE = "qwertyuiop";
 const SALT = "asdfghjklzxcvbnm";
-const maxAge = 1000 * 60 * 5;
+const maxAge = 60 * 5;
 
 const createToken = (user) => {
   const { name, email } = user;
