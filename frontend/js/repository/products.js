@@ -9,12 +9,15 @@ class ProductsRepository {
 
   async getProducts(cb) {
     try {
-      const response = await fetch("http://localhost:3000/api/devices", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token.get()}`,
-        },
-      });
+      const response = await fetch(
+        "https://mac-outlet-shop-app.herokuapp.com/api/devices",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token.get()}`,
+          },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
