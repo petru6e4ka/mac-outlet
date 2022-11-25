@@ -7,7 +7,7 @@ const {
 } = require("../middlewares/validations");
 const { authRequired } = require("../middlewares/auth");
 
-const index = process.cwd() + "/frontend/index.html";
+const index = process.cwd() + "/index.html";
 
 const routes = (app) => {
   app.route("/api/devices").get(authRequired, getDevices);
