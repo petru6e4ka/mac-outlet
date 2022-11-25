@@ -23,7 +23,7 @@ const routes = (app) => {
     .post(valuesValidation, newUserValidation, createUser);
   app.route("/api/signin").post(valuesValidation, userValidation, loginUser);
 
-  app.route("/").get((_req, res) => {
+  app.route("/shop").get((_req, res) => {
     res.sendFile(index);
   });
   app.route("*").get((_req, res) => {
